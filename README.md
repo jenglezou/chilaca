@@ -1,6 +1,6 @@
 #chilaca
 
-Noun (plural **chilacas*) 
+Noun (plural **chilacas**) 
 
 1. a variety of chili; when dried, the chilis are called pasillas.
-2. A VBScript-based testing framework compatible with QTP/UFT and HPQC/ALM.
+2. a VBScript-based testing framework compatible with QTP/UFT and HPQC/ALM.

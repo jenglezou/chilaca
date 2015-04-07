@@ -1,4 +1,4 @@
-#chilaca
+## <img width="67" src="https://github.com/jenglezou/chilaca/blob/master/documentation/ImagesForWiki/flame-clipart-greens-flame-hi.png"/>chilaca
 
 Noun (plural **chilacas**) 
 

@@ -1,0 +1,1403 @@
+ <HTML>
+<HEAD>
+<TITLE>JSSys3.DLL Functions</TITLE></HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000" LINK="#3F2BF7" ALINK="#FF0080" VLINK="#3F2BF7">
+<DIV align="center">
+<FONT FACE="arial" SIZE=2>
+<H2>JSSys3.DLL Function Reference - v.3.09.1029</H2>
+<A NAME="top"></A>
+
+<A HREF="#note">Update Notes</A> <BR>
+</FONT>
+<HR>
+<TABLE WIDTH=100% BORDER=0 CELLPADDING=5>
+<TR>
+<TD valign="top">
+<FONT FACE="arial" COLOR="#000000" SIZE=2><B>
+Ops<BR><BR>
+
+</B>Information<B><BR>
+<A HREF="#opv">GetOpVersion</A> <BR>
+<A HREF="#gexe">GetEXEPath</A> <BR>
+<A HREF="#mem">GetMemory</A> <BR>
+<A HREF="#cuser">GetCurUser</A> <BR>
+<A HREF="#gcomp">GetCompName</A> <BR>
+<A HREF="#ccomp">ChangeCompName</A> <BR>
+<A HREF="#cdriv">ChangeDriveName</A> <BR>
+<A HREF="#drivi">GetDriveInfo</A> <BR>
+<A HREF="#defprog">GetDefaultProgram</A> <BR>
+<A HREF="#gcol">GetColorDepthBPP</A> <BR>
+<A HREF="#dpix">GetDesktopPixels</A> <BR>
+<A HREF="#spix">GetScreenPixels</A> <BR>
+</B>Clipboard<B><BR>
+<A HREF="#clips">SendTextCB</A> <BR>
+<A HREF="#clipg">GetTextCB</A> <BR>
+
+</B>Processes<B><BR>
+<A HREF="#proc">GetProcessList</A> <BR>
+<A HREF="#winlist">GetOpenWindowTitles</A> <BR>
+<A HREF="#winact">GetActiveWindowTitle</A> <BR>
+<A HREF="#winsetact">SetWindowActive</A> <BR>
+<A HREF="#closeprog">CloseProgram</A> <BR>
+
+</B>
+</FONT>
+</TD>
+<TD valign="top">
+<FONT FACE="arial" COLOR="#000000" SIZE=2><B>
+Ops<BR><BR>
+
+</B>Dialogues<B><BR>
+<A HREF="#odlg">OpenDlg</A> <BR>
+<A HREF="#mdlg">OpenMultiDlg</A> <BR>
+<A HREF="#sdlg">SaveDlg</A> <BR>
+<A HREF="#cdlg">ColorDlg</A> <BR>
+<A HREF="#brffol">BrowseForFolder</A> <BR>
+
+</B>Registry<B><BR>
+<A HREF="#rgv">RegGetValue</A> <BR>
+<A HREF="#rwv">RegWriteValue</A> <BR>
+<A HREF="#rlk">RegListKeys</A> <BR>
+<A HREF="#rlv">RegListVals</A> <BR>
+<A HREF="#rls">RegListStringData</A> <BR>
+<A HREF="#rdv">RegDeleteVal</A> <BR>
+<A HREF="#rds">RegDeleteSubkey</A> <BR><BR>
+<A HREF="#rfid">GetRegFromCLSID</A> <BR>
+<A HREF="#rfid">GetRegFromProgID</A> <BR>
+
+</B>Display<B><BR>
+<A HREF="#syscol">GetSystemColor</A> <BR>
+<A HREF="#syscolset">SetSystemColor</A> <BR>
+<A HREF="#wallp">SetWallpaper</A> <BR>
+<A HREF="#backc">SetBackColor</A> <BR>
+</B>
+</FONT>
+</TD>
+<TD valign="top">
+<FONT FACE="arial" COLOR="#000000" SIZE=2><B>
+Ops<BR><BR>
+</B>Misc<B><BR>
+<A HREF="#pwav">PlayWav</A> <BR>
+<A HREF="#exitw">ExitWin</A> <BR>
+<A HREF="#time1">TimerStart</A> <BR>
+<A HREF="#time2">TimerStop</A> <BR>
+<A HREF="#print">PrintFile</A> <BR>
+
+</B>
+ PEFile Object<BR><B>
+<A HREF="#pefil">PEFile Object</A> <BR> <BR>
+
+INIEdit<BR><BR>
+<A HREF="#gisv">GetIniSectionVals</A> <BR> 
+<A HREF="#gisk">GetIniSectionkeys </A> <BR>
+<A HREF="#gisn">GetIniSectionNames </A> <BR>
+<A HREF="#giv">GetIniVal</A> <BR> 
+<A HREF="#wis">WriteIniSection</A> <BR> 
+<A HREF="#wiv">WriteIniVal </A> <BR><BR>  </B>
+<B>
+
+StreamOps<BR><BR>
+
+<A HREF="#isnt">IsNTFS</A> <BR> 
+<A HREF="#listads">ListStreams</A> <BR> 
+<A HREF="#readads">ReadStream</A> <BR> 
+<A HREF="#delads">DeleteStream</A> <BR> 
+
+</B>
+</FONT>
+</TD>
+</TR>
+</TABLE>
+</DIV><DIV align="left">
+<HR>
+<FONT FACE="arial" COLOR="#000000" SIZE=2>
+<A NAME="clips"></A>
+<H4>Function SendTextCB(vText)</H4>
+&#149; Send text to Clipboard<BR>
+ex: r = sys.SendTextCB(s)<BR><BR>
+
+<B>vText </B>is text to send to Clipboard.<BR>
+<B>Return:</B> 0-ok.  1-no text in vText variable. 2-error.
+
+<BR><BR>
+<A HREF="#top">Back to Top</A><BR><BR>
+<!-- ----------------------------------------------------------------------------------  -->
+<HR>
+<A NAME="clipg"></A>
+<H4>Function GetTextCB(vText)</H4>
+&#149; Get text from Clipboard.<BR>
+ex.: r = sys.GetTextCB(s)<BR><BR>
+
+<B>vText</B> is text returned from Clipboard.<BR>
+<B>Return: </B>0-ok. 1-Clipboard data is not text format. 2-error.
+<BR><BR>
+<A HREF="#top">Back to Top</A><BR><BR>
+<!-- ----------------------------------------------------------------------------------  -->
+<HR>
+<A NAME="exitw"></A>
+<H4>Sub ExitWin(vExitMode)</H4>
+&#149; Exit Windows<BR>
+ex.: sys.ExitWin 2<BR><BR>
+
+<B>vExitMode:</B> <BR>
+0 - logoff<BR>
+1 - shut down<BR>
+2 - reboot
+
+
+
+<BR><BR>
+<A HREF="#top">Back to Top</A><BR><BR>
+<!-- ----------------------------------------------------------------------------------  -->
+<HR>
+<A NAME="opv"></A>
+<H4>Function GetOpVersion(vOSVersion)</H4>
+&#149; Get OS version info.<BR>
+ex.: r = sys.GetOpVersion(a)<BR><BR>
+
+<B>vOSVersion</B> returns OS version info. in array.<BR><BR>
+
+<B>Return:</B>  0-ok. 1-failed.<BR>
+
+If return is 1 vOSVersion will be "".<BR><BR>
+
+If return is 0 vOSVersion will be an array of Ubound 4:<BR>
+   a(0) = Platform Number: 1-9x  2-NT<BR>
+   a(1) = Major Version Number<BR>
+   a(2) = Minor Version Number<BR>
+   a(3) = Build Number<BR>
+   a(4) = Version Info: In 9x this will be any extra info. In NT it will be the service pack number. 
+
+
+<BR><BR>
+<A HREF="#top">Back to Top</A><BR><BR>
+<!-- ----------------------------------------------------------------------------------  -->
+<HR>
+<A NAME="mem"></A>
+<H4>Function GetMemory(vTotal, vInUse)</H4>
+
+&#149; Get installed RAM and RAM currently in use.<BR>
+ex.: r = sys.GetMemory(t, u)<BR><BR>
+
+
+
+<B>Return:</B> 0-ok.  1-failed.<BR><BR>
+
+
+On success r returns 0.<BR>
+<B>vTotal </B>returns installed RAM in MB.<BR>
+<B>vInUse </B>returns RAM currently used, in MB.<BR><BR>
+
+On error r returns 1.<BR>
+vTotal and vInUse both return 0.
+
+
+<BR><BR>
+<A HREF="#top">Back to Top</A><BR><BR>
+<!-- ----------------------------------------------------------------------------------  -->
+<HR>
+<A NAME="cuser"></A>
+<H4>Function GetCurUser()</H4>
+&#149; Get current user name.<BR>
+ex.: sName = sys.GetCurUser<BR><BR>
+
+<B>Return:</B><BR>
+Returns current user name.<BR>
+On error returns "".
+
+
+<BR><BR>
+<A HREF="#top">Back to Top</A><BR><BR>
+<!-- ----------------------------------------------------------------------------------  -->
+<HR>
+<A NAME="gcomp"></A>
+<H4>Function GetCompName()</H4>
+&#149; Get computer name.<BR>
+ex.: sName = sys.GetCompName<BR><BR>
+
+<B>Return:</B><BR>
+Returns computer name.<BR>
+On error returns "".
+
+<BR><BR>
+<A HREF="#top">Back to Top</A><BR><BR>
+<!-- ----------------------------------------------------------------------------------  -->
+<HR>
+<A NAME="ccomp"></A>
+<H4>Function ChangeCompName(vNewName)</H4>
+&#149; Change computer name.<BR>
+ex.: r = sys.ChangeCompName("COMPNEW")<BR><BR>
+
+<B>vNewName</B> is new computer name. Must be no greater than 15 characters.<BR><BR>
+
+<B>Return:</B> 0-ok.  1-failed.<BR>
+If vNewName is greater than 15 characters in length the left<BR>
+15 characters will be used.
+
+<BR><BR>
+<A HREF="#top">Back to Top</A><BR><BR>
+<!-- ----------------------------------------------------------------------------------  -->
+<HR>
+<A NAME="cdriv"></A>
+<H4>Sub ChangeDriveName(vDriveLetter, vNewName)</H4>
+&#149; Change name of a fixed drive.<BR>
+ex.: r = sys.ChangeDriveName("D", "BACKUP")<BR><BR>
+
+<B>vDriveLetter</B> is drive for name change.<BR>
+<B>vNewName</B> is volume name to assign to drive.<BR><BR>
+
+<B>Return:</B> 0-ok. 1-failed.
+<BR><BR>
+<A HREF="#top">Back to Top</A><BR><BR>
+<!-- ----------------------------------------------------------------------------------  -->
+<HR>
+<A NAME="gcol"></A>
+<H4>Function GetColorDepthBPP()</H4>
+&#149; Get bits-per-pixel display depth.<BR>
+ex.: bpp = sys.GetColorDepthBPP<BR><BR>
+
+On error returns 0.
+<BR><BR>
+<A HREF="#top">Back to Top</A><BR><BR>
+<!-- ----------------------------------------------------------------------------------  -->
+<HR>
+<A NAME="dpix"></A>
+<H4>Function GetDesktopPixels(vDeskWidth, vDeskHeight)</H4>
+&#149; Get width and height of Desktop work area (excluding taskbar).<BR>
+ex.: r = sys.GetDesktopPixels(w, h)<BR><BR>
+
+<B>Return:</B> 0-ok. 1-failed.<BR>
+On success function returns 0, vDeskWidth and vDeskHeight contain<BR>
+width and height of Desktop work area in pixels.<BR>
+On error function returns 1, vDeskWidth and vDeskHeight contain 0.
+
+<BR><BR>
+<A HREF="#top">Back to Top</A><BR><BR>
+<!-- ----------------------------------------------------------------------------------  -->
+<HR>
+<A NAME="spix"></A>
+<H4>Function GetScreenPixels(vScreenWidth, vScreenHeight)</H4>
+&#149; Get width and height of screen.<BR>
+ex.: r = sys.GetScreenPixels(w, h)<BR><BR>
+
+<B>Return: </B>0-ok. 1-failed.<BR>
+On success function returns 0, vScreenWidth and vScreenHeight<BR>
+contain width and height of screen in pixels.<BR>
+On error function returns 1, vScreenWidth and vScreenHeight contain 0.
+
+
+<BR><BR>
+<A HREF="#top">Back to Top</A><BR><BR>
+<!-- ----------------------------------------------------------------------------------  -->
+<HR>
+<A NAME="syscol"></A>
+<H4>Function GetSystemColor(vItem)</H4>
+&#149; Get color in use for various GUI items.<BR>
+ex.: r = sys.GetSystemColor("Desktop")<BR><BR>
+
+<B>vItem options:</B><BR>
+"TitleBar" - Active window title bar.<BR>
+"TitleBar2" - Active window title bar right gradient color.<BR>
+"TitleBarText" - Active window title bar text.<BR>
+"InactiveTitleBar" - Inactive window title bar.<BR>
+"InactiveTitleBar2" - Inactive window title bar right gradient color.<BR>
+"InactiveTitleBarText" - Inactive window title bar text.<BR>
+"Buttons" - Color for body of windows and buttons.<BR>
+"Scrollbars" - Scrollbar color.<BR>
+ "Desktop" - Desktop background color.<BR>
+ "ButtonText" - Text of button captions.<BR>
+ "Selection" - highlight color (default dark blue.)<BR>
+ "SelText" - color of actual text in text selection.<BR>
+ "Menu" - window menu background (usually the same as button color).<BR>
+ "MenuText" - window menu text.<BR>
+ "WindowBackground" - background inside window (default white).<BR>
+ "WindowBackText" - text inside window (default black).<BR><BR>
+     
+<B>Return: </B><BR>
+On success function returns a 6-character hex code for color.<BR>
+Ex.: white = "FFFFFF" red = "FF0000"<BR>
+If vItem parameter is not valid function returns "0". Success can be<BR>
+checked with: If Len(r) = 6 Then '--success.
+
+
+<BR><BR>
+<A HREF="#top">Back to Top</A><BR><BR>
+
+<!-- ----------------------------------------------------------------------------------  -->
+<HR>
+<A NAME="syscolset"></A>
+<H4>Function SetSystemColor(vItem, vHexCode)</H4>
+&#149; Set color of various GUI items.<BR>
+ex.: r = sys.SetSystemColor("Desktop", "0000FF")<BR><BR>
+
+<B>vItem options:</B><BR>
+"TitleBar" - Active window title bar.<BR>
+"TitleBar2" - Active window title bar right gradient color.<BR>
+"TitleBarText" - Active window title bar text.<BR>
+"InactiveTitleBar" - Inactive window title bar.<BR>
+"InactiveTitleBar2" - Inactive window title bar right gradient color.<BR>
+"InactiveTitleBarText" - Inactive window title bar text.<BR>
+"Buttons" - Color for body of windows and buttons.<BR>
+"Scrollbars" - Scrollbar color.<BR>
+ "Desktop" - Desktop background color.<BR>
+ "ButtonText" - Text of button captions.<BR>
+ "Selection" - highlight color (default dark blue.)<BR>
+ "SelText" - color of actual text in text selection.<BR>
+ "Menu" - window menu background (usually the same as button color).<BR>
+ "MenuText" - window menu text.<BR>
+ "WindowBackground" - background inside window (default white).<BR>
+ "WindowBackText" - text inside window (default black).<BR><BR>
+
+<B>vHexCode</B> is any valid 6-character hex number.<BR><BR>
+     
+<B>Return: </B><BR>
+0-ok.  1-invalid vItem parameter.  2-invalid vHexCode parameter.<BR>
+ 3-color set failed. 4-unable to set color permanently. 5-unknown error.
+
+<BR><BR>
+<A HREF="#top">Back to Top</A><BR><BR>
+<!-- ----------------------------------------------------------------------------------  -->
+<HR>
+<A NAME="drivi"></A>
+<H4>Function GetDriveInfo()</H4>
+&#149; Get information about fixed drives.<BR>
+
+  ex.: vInfo = sys.GetDriveInfo  <BR><BR>
+
+  <B> Return:</B><BR>
+On success returns comma-delimited string of all fixed drive letters,
+      as drivepath [space] total size[space] free space. <BR>
+
+       (  Ex.: "c:\ 2000 329,d:\ 4500 1382" )<BR><BR>
+
+On error returns "".
+
+
+<BR><BR>
+<A HREF="#top">Back to Top</A><BR><BR> 
+
+<!-- ----------------------------------------------------------------------------------  -->
+<HR>
+<A NAME="defprog"></A>
+<H4>Function GetDefaultProgram(vExt)</H4>
+&#149; Get path of default program for file type.<BR>
+
+  ex.: v = sys.GetDefaultProgram("bmp")  <BR><BR>
+
+<B>vExt</B> is file extension for query.<BR><BR>
+
+<B> Return:</B><BR>
+On success returns path of program executable assigned as default<BR>
+for file type vExt. Returns "" if file extension is not registered or has no<BR>
+default program.
+
+
+<BR><BR>
+<A HREF="#top">Back to Top</A><BR><BR>  
+<!-- ----------------------------------------------------------------------------------  -->
+<HR>
+<A NAME="rgv"></A>
+<H4>Function RegGetValue(vKey, vRegPath, vValue, vData, vType) </H4>
+&#149; Get String, Dword or Binary value data from Registry.<BR>
+ex.: r = sys.RegGetValue("HKLM", "Software\Microsoft\Windows\CurrentVersion", "RegisteredOwner", a, sType)<BR><BR>
+
+ <B>vKey</B> can be "HKCR", "HKCU", "HKLM", "HKU", "HKCC" or "HKDD"<BR>
+<B>vRegpath</B> is path of Registry key.<BR>
+<B>vValue </B>is name of Registry value.<BR>
+<B>vData</B> returns value data.<BR>
+ <B>vType </B>returns data type.<BR><BR>
+       
+<B>Return:</B><BR>
+0-ok. 1-no data. 2-failed to open key or wrong key path. 3-value does not exist. <BR>
+4-invalid hkey parameter. 5-unknown data type.  6-unknown error.<BR><BR>
+ 
+On success vData returns value data. vType returns data type:<BR>
+vType = S: data is string value (REG_EXPAND_SZ type will be "expanded").<BR>
+vType = D: data is number.<BR>
+vType = B: data is array of byte values as decimal numbers.<BR>
+vType = M: data is array of strings.<BR><BR>
+
+If function fails or value has no data return is non-zero. vType will return<BR>
+ type with error 1, otherwise returns "". vData will return "".<BR><BR>
+
+<B>Notes:</B> <BR>
+ &#160; * Using [ If vData = "" Then ] to test return will cause an error if data<BR>
+is a binary array. Checking function return is a more dependable method. <BR>
+vType can then be checked for data type:  </FONT><FONT FACE="arial" SIZE=3>
+<PRE>
+   If r = 0 then
+       Select Case vType....
+</PRE></FONT><FONT FACE="arial" SIZE=2>
+
+ &#160; * When return type is D that signifies a DWord value. DWord values are<BR>
+32-bit numbers. Visual Basic/VBS handles 32-bit numbers as signed integers.<BR>
+In other words, while the Registry will store a 32-bit number as a value between<BR>
+ 0 and 4 billion+, VB will read the number as being between -2,147,483,648 and<BR>
+2,147,483,647<BR>
+  &#160; In most cases this will not be relevant but if the DWord value exceeds<BR>
+2,147,483,647 (7FFFFFFF) a negative number will be returned. (For example,<BR>
+FFFFFFFE = -2). If necessary, this behavior can be handled with code such as:
+</FONT><FONT FACE="arial" SIZE=3> <PRE>
+    If vData &#60 0 Then
+        vdata = Hex(vdata) 
+</PRE> </FONT><FONT FACE="arial" SIZE=2>
+(That would return "FFFFFFFE" in place of -2.)
+
+<BR><BR>
+<A HREF="#top">Back to Top</A><BR><BR>
+<!-- ----------------------------------------------------------------------------------  -->
+<HR>
+<A NAME="rwv"></A>
+<H4>Function RegWriteValue(vKey, vRegPath, vValue, vData, vType)</H4>
+&#149; Write a String Dword or Binary value to Registry.<BR>
+ex.: r = sys.RegWriteValue("HKCU", "Software\Prog1", "ShowMaximized", 1, "D")<BR><BR>
+
+<B>vKey </B>can be "HKCR", "HKCU", "HKLM" or "HKU"<BR>
+<B>vRegpath</B> is path of Registry key. (key will be created if necessary)<BR>
+<B>vValue</B> is name of Registry value. Use "" for default value.<BR>
+<B>vData</B> is data to write.<BR>
+<B>vType</B> must be "S", "X", "M", "D", "B", or "BH".<BR><BR>
+
+<B>vData examples:</B><BR>
+String:  "abcdefg" -- [vType = "S"]<BR>
+Expand-String: "%Windir%" -- [vType = "X"]<BR>
+Multi-String:  a1 = array("value1", "value2", "value3", "value4") -- [vType = "M"]<BR>
+Dword:   1352 -- [vType = "D"]<BR>
+Binary: Binary values must be sent in an array. There are 2 options:<BR>
+ &#160; Decimal: a1 = Array(100, 0, 0, 255, 132, 151, 0, 0, 255, 2) -- [vType = "B"]<BR>
+ &#160; Hexadecimal: a1 = Array("64", "00", "00", "FF", "84", "97", "00", "00", "FF", "02") -- [vType = "BH"]<BR><BR>
+
+&#160; a1 would be vData. Hexadecimal values must be sent as 2 characters. <BR>
+&#160; Hexadecimal values also must use quotes. WScript will raise an error with<BR>
+&#160;  alphabetic hex charcters not in quotes and JSSys will return 3.<BR>
+   &#160;  In either usage, all array values must be equivalent to 0 - 255 decimal.<BR><BR>
+
+<B>Return: </B><BR>
+0-ok.  1-failure to open/create key.  2-failure to set value.  3-invalid binary data.<BR>
+4-vKey value not valid.  5-no vRegPath value sent.  6-attempting to set default <BR>
+value with other than string.  7-invalid dword data.  8-binary data not array. <BR>
+9-invalid type parameter sent.  10-unknown error.
+<BR><BR>
+
+
+<B>Notes:</B> <BR>
+* Large DWord values, over 2,147,483,647, cannot be sent as decimal numbers because<BR>
+of the way that VB/VBS sees a 32-bit number. (See notes under RegGetValue.) To write larger<BR>
+numbers they can be sent in hex notation: "&HFFFFFFF0"<BR><BR>
+<A HREF="#top">Back to Top</A><BR><BR>
+<!-- ----------------------------------------------------------------------------------  -->
+<HR>
+<A NAME="rlk"></A>
+<H4>Function RegListKeys(vKey, vRegPath, vKeyList)</H4>
+&#149; Get a list of subkeys under a given Registry key.<BR>
+ex.: r = sys.RegListKeys("HKLM", "Software\Microsoft\Windows\CurrentVersion\Uninstall", a)<BR><BR>
+
+<B>vKey </B>can be "HKCR", "HKCU", "HKLM", "HKU", "HKCC" or "HKDD"<BR>
+<B>vRegpath</B> is path of Registry key.<BR>
+<B>vKeyList</B> returns an array of subkey names.<BR><BR>
+
+<B>Return:</B>
+0-ok.  1-no subkeys.  2-failed to open key.  3-invalid vKey parameter.  4-unknown error.<BR>
+If function returns 0 vKeyList will contain an array of subkey names. Otherwise, vKeyList
+will contain "".
+
+<BR><BR>
+<A HREF="#top">Back to Top</A><BR><BR>
+<!-- ----------------------------------------------------------------------------------  -->
+<HR>
+<A NAME="rlv"></A>
+<H4>Function RegListVals(vKey, vRegPath, vValList) </H4>
+&#149; Enumerate values in a Registry key.<BR>
+ex.: r = sys.RegListVals("HKLM", "Software\Microsoft\Windows\CurrentVersion\Uninstall", a)<BR><BR>
+
+<B>vKey </B>can be "HKCR", "HKCU", "HKLM", "HKU", "HKCC" or "HKDD"<BR>
+<B>vRegpath</B> is path of Registry key.<BR>
+<B>vValList</B> returns an array of key values and type.<BR><BR>
+
+<B>Return:</B>
+0-ok.  1-no values in key.  2-failed to open key.  3-invalid key. 4-error.<BR>
+On error vValList returns "". <BR>
+On success vValList returns an array of value names. The last 2 characters<BR>
+include a slash and a letter to indicate value type. <BR>
+ex.: a(0) = "valueName1/S" a(1) = "valueName2/B" a(2) = "valueName3/D" ...etc.<BR><BR>
+
+/S  -  REG_SZ<BR>
+/B  -   REG_BINARY<BR>
+/D  -  REG_DWORD<BR>
+/X  -  REG_EXPAND_SZ<BR>
+/U  -  Other or unknown.                    
+
+<BR><BR>
+<A HREF="#top">Back to Top</A><BR><BR>
+
+<!-- ------------------------ regliststringdata ----------------------------------------------------------  -->
+<HR>
+<A NAME="rls"></A>
+<H4>Function RegListStringData(vKey, vRegPath, vValList)</H4>
+&#149; Get list of all string values and data in Registry key.<BR>
+ex.: r = sys.RegListStringData("HKLM", "Software\Microsoft\Windows\CurrentVersion\Uninstall", a)<BR><BR>
+
+<B>vKey </B>can be "HKCR", "HKCU", "HKLM", "HKU", "HKCC" or "HKDD"<BR>
+<B>vRegpath</B> is path of Registry key.<BR>
+<B>vValList</B> returns an array of key values and type.<BR><BR>
+
+<B>Return:</B>
+0-ok. 1-no string values.  2-failed to open key.  3-invalid key.  4-error.<BR>
+
+On success vValList returns an array of value names and data<BR>
+formatted as Value^Data (ex.: "RegisteredOwner^Louie").<BR>
+On error vValList returns "". 
+<BR><BR>
+<A HREF="#top">Back to Top</A><BR><BR>
+
+<!-- ------------------------------ RegDeleteVal ----------------------------------------------------  -->
+<HR>
+<A NAME="rdv"></A>
+<H4>Function RegDeleteVal(vKey, vRegPath, vValue)</H4>
+&#149; Deletes a value from the Registry.<BR>
+ex.: r = sys.RegDeleteVal("HKCU", "Software\Softco\SomeApp\Settings", "MRU1")<BR><BR>
+
+<B>vKey </B>can be "HKCR", "HKCU", "HKLM", or "HKU"<BR>
+<B>vRegpath</B> is path of Registry key.<BR>
+<B>vValue</B> is value to be deleted.<BR><BR>
+
+<B>Return:</B> 0-ok. 1-failed. 2-vKey parameter invalid. 3-unknown error.
+<BR><BR>
+
+Use "" for vValue to delete default key value data.<BR><BR>
+<A HREF="#top">Back to Top</A><BR><BR>
+
+<!-- ------------------------------ RegDeleteSubkey ----------------------------------------------------  -->
+<HR>
+<A NAME="rds"></A>
+<H4>Function RegDeleteSubkey(vKey, vRegPath, vSubkey)</H4>
+&#149; Deletes a key from the Registry.<BR>
+ex.: r = sys.RegDeleteSubkey("HKCU", "Software\Softco\SomeApp", "Settings")<BR><BR>
+
+<B>vKey </B>can be "HKCR", "HKCU", "HKLM", or "HKU"<BR>
+<B>vRegpath</B> is path of Registry key that contains subkey to be deleted.<BR>
+<B>vSubkey</B> is name of key to be deleted.<BR><BR>
+
+<B>Return:</B> <BR>
+0-ok. 1-failed to open key. 2-failed to delete key or one of its subkeys. 3-vKey or vSubkey parameter not valid. 4-unknown error.<BR><BR>
+
+RegDeleteSubkey is designed to accomodate the limitation in WinNT by which<BR>
+only a key with no subkeys can be deleted. When the function is used on an<BR>
+NT system a recursive, reverse deletion is performed.
+
+<BR><BR>
+<A HREF="#top">Back to Top</A><BR><BR>
+
+<!-------------------------------- GetRegFromID -------------------------------------- -->
+<HR>
+<A NAME="rfid"></A>
+<H4>Function GetRegFromCLSID(vCLSID)  - Function GetRegFromProgID(vProgID)</H4>
+&#149; Two methods that check for registered objects.<BR>
+ex.: a = sys.GetRegFromCLSID("{F738999A-E160-11D6-B5C6-C78C22D19941}")<BR>
+&#160; &#160; &#160; a = sys.GetRegFromProgID("Scripting.FileSystemObject")<BR><BR>
+
+Both of these functions check whether a given class is registered on the system.<BR>
+Either the CLSID or the ProgID can be used. <BR><BR>
+<B>Return:</B><BR>
+With both methods the return is always an array of Ubound 5:<BR>
+Array(0) - errorcode. 0-class was found and array contains data. 1-class not found.<BR>
+Array(1) - CLSID - returns the CLSID for the class.<BR>
+Array(2) - ProgID - returns the ProgID for the class.<BR>
+Array(3) - VersionIndependentProgID. If present this will be the ProgID without version<BR>
+&#160; &#160; extension. (ex.: ProgID: InternetExplorer.Application.1 V. I. ProgID: InternetExplorer.Application<BR>
+Array(4) - InprocServer - returns path of file if in-process (DLL).<BR>
+Array(5) - LocalServer - returns path of file if out-of-process (EXE).<BR><BR>
+
+&#160; &#160; There will never be data for all of these values with a single class. When a value is not<BR>
+present the return will be "" for the respective array index. Array(3) will not always have<BR>
+a value and only one of Array(4) and Array(5) can return a value.<BR>
+&#160; &#160; These methods can be used to check whether a given class is registered. They can also be <BR>
+used to find the ProgID from CLSID or vice versa. The ProgID file path can be used with <BR>
+FSO.GetFileVersion to find the file version of the file that contains the class.
+
+<BR><BR>
+<A HREF="#top">Back to Top</A><BR><BR>
+
+<!-------------------- End Reg methods ------------------------------------------------ -->
+
+<!-- --------------------------- PlayWav -------------------------------------------------------  -->
+<HR>
+<A NAME="pwav"></A>
+<H4>Sub PlayWav(vFilePath)</H4>
+&#149; Play a .WAV file.<BR>
+ex.: sys.PlayWav "C:\Windows\Media\Chimes.wav"
+
+<BR><BR>
+<A HREF="#top">Back to Top</A><BR><BR>
+<!-- ----------------------------------------------------------------------------------  -->
+<HR>
+<A NAME="gexe"></A>
+<H4>Function GetEXEPath(exeName)</H4>
+&#149; Get full path of a registered program executable.<BR>
+ex.: r = sys.GetEXEPath("iexplore.exe")<BR><BR>
+
+Returns full path or "" if not found.
+
+
+<BR><BR>
+<A HREF="#top">Back to Top</A><BR><BR>
+<!-- ----------------------------------------------------------------------------------  -->
+<HR>
+<A NAME="wallp"></A>
+<H4>Function SetWallpaper(vFilePath, vStyle)</H4>
+&#149; Install Desktop wallpaper.<BR>
+ex.: r = sys.SetWallpaper("C:\pic1.bmp", "stretch")<BR><BR>
+
+<B>vFilePath</B> is full path to .BMP file.<BR>
+<B>vStyle</B> must be "center", "tile" or "stretch".<BR><BR>
+
+<B>Return:</B><BR>
+0-ok.  1- invalid file parameter.  2- invalid style parameter.  3- failed.<BR><BR>
+
+<B> To remove wallpaper</B> use "" for both parameters: <BR>
+&#160; &#160; &#160; r = sys.SetWallpaper("", "")<BR><BR>
+
+<B>Note:</B> This function copies the selected wallpaper file to the Windows<BR>
+folder as jssyswp.bmp. That file cannot be used as the vFilePath parameter.
+
+<BR><BR>
+<A HREF="#top">Back to Top</A><BR><BR>
+<!-- ----------------------------------------------------------------------------------  -->
+<HR>
+<A NAME="backc"></A>
+<H4>Function SetBackColor(vHexCode)</H4>
+&#149; Set Desktop background color.<BR>
+ex.: r = sys.SetBackColor("0000FF")<BR><BR>
+
+<B>vHexCode</B> may be any valid 6-character hex code.<BR><BR>
+
+<B>Return:</B><BR>
+0-ok.  1-invalid hexcode parameter. 2-failed.
+
+
+<BR><BR>
+<A HREF="#top">Back to Top</A><BR><BR>
+<!-- ----------------------------------------------------------------------------------  -->
+<HR>
+<A NAME="time1"></A>
+<H4>Sub TimerStart()</H4>
+&#149; Start a timer operation.<BR>
+ex.: sys.TimerStart<BR><BR>
+
+Call TimerStart to start timing in milliseconds.
+
+<BR><BR>
+<A HREF="#top">Back to Top</A><BR><BR>
+<!-- ----------------------------------------------------------------------------------  -->
+<HR>
+<A NAME="time2"></A>
+<H4>Function TimerStop()</H4>
+&#149; Stop timer and get result.<BR>
+ex.: r = sys.TimerStop<BR><BR>
+
+Returns number of milliseconds elapsed since call to TimerStart.<BR>
+TimerStop stops timer operation. Each timer operation must be <BR>
+started with TimerStart.<BR>
+ If TimerStart was not called TimerStop returns 0.
+
+
+<BR><BR>
+<A HREF="#top">Back to Top</A><BR><BR>
+
+<!-- ----------------------------------------------------------------------------------  -->
+<HR>
+<A NAME="print"></A>
+<H4>Function PrintFile(vFilePath)</H4>
+&#149; Print a file with its default program.<BR>
+ex.: r = sys.PrintFile("C:\windows\desktop\file.txt")<BR><BR>
+
+<B>vFilePath </B>is path of file to print.<BR><BR>
+
+This function can only work if there is a default program for<BR>
+the filetype and that program is capable of handling the Print<BR>
+message from Windows through DDE (dynamic data exchange).<BR><BR>
+
+<B>Return:</B> 0-ok.  -1 - unknown error.<BR>
+If the system is unable to comply with the request the Windows<BR>
+ERROR_ error code is returned. Among possible returns:<BR>
+2-file not found. 3-path not found. 5-access denied. 32-sharing violation.
+
+
+
+<BR><BR>
+<A HREF="#top">Back to Top</A><BR><BR>
+
+<!-- ----------------------------------------------------------------------------------  -->
+<HR>
+<A NAME="proc"></A>
+<H4>Function GetProcessList(vProcList, vNumberProcs)</H4>
+&#149; Get a list of running processes.<BR>
+ex.: r = sys.GetProcessList(s, num)<BR><BR>
+
+<B>vProcList</B> returns a comma-delimited string of file paths.<BR>
+&#160; (ex.: "C:\Windows\explorer.exe,C:\Windows\System\Shell32.dll.....etc. )<BR>
+<B>vNumberProcs </B>returns number of running processes.<BR><BR>
+
+<B>Return:</B><BR>
+0-ok. 1-unable to confirm Windows version. 2-not 9x/2000/XP. 3-error.<BR>
+If method fails vProcList returns "" and vNumberProcs returns 0.
+<BR><BR>
+<B>Update note Jan., 2006: </B> GetProcessList had been returning only file
+names, not full paths, on Windows XP. JSSys3.dll has now been updated
+to fix that.<BR><BR>
+
+<A HREF="#top">Back to Top</A><BR><BR>
+
+<!-- ----------------------------------------------------------------------------------  -->
+<HR>
+<A NAME="winlist"></A>
+<H4>Function GetOpenWindowTitles(vTitles As Variant)</H4>
+&#149; Get a list of open, visible "top-level" windows by title bar text.<BR>
+This function can be used to get title needed for CloseProgram sub.<BR>
+ex.: r = sys.GetOpenWindowTitles(a)<BR><BR>
+
+<B>vTitles</B> returns an array of window titles. If method fails,<BR>
+or if there are no open windows, vTitles returns "".<BR><BR>
+
+<B>Return:</B><BR>
+Function return is number of window titles listed in array vTitles.<BR>
+A window is listed only if it is visible so that the window list will<BR>
+actually represent open programs and Explorer windows on the<BR>
+Desktop. (A minimized window is visible).<BR>
+ &#160; Possibly useful note: The list returned seems to always contain<BR>
+ "Program Manager" (ProgMan).<BR><BR>
+A return of -1 indicates that function failed.<BR>
+A return of 0 indicates no open windows.
+
+<BR><BR>
+<A HREF="#top">Back to Top</A><BR><BR>
+
+<!-- ----------------------------------------------------------------------------------  -->
+<HR>
+<A NAME="winact"></A>
+<H4>Function GetActiveWindowTitle()</H4>
+&#149; Get the title bar text of active window.<BR>
+This function can be used to get title needed for CloseProgram sub.<BR>
+ex.: r = sys.GetActiveWindowTitle()<BR><BR>
+
+<B>Return:</B><BR>
+Function return is title bar text of active window. This function<BR>
+can be used in conjunction with SetWindowActive for greater<BR>
+control with SendKeys functions.<BR>
+Returns "" if method failed or if window has no title.
+<BR><BR>
+<A HREF="#top">Back to Top</A><BR><BR>
+
+<!-- ----------------------------------------------------------------------------------  -->
+<HR>
+<A NAME="winsetact"></A>
+<H4>Function SetWindowActive(vTitle, vBoolMin)</H4>
+&#149; Set foreground window - the window that gets input.<BR>
+ex.: r = sys.SetWindowActive("Untitled - Notepad", True)<BR><BR>
+
+<B>vTitle</B> is title bar text of window to set active. Value can<BR>
+be obtained with GetOpenWindowTitles function.<BR><BR>
+
+<B>vBoolMin</B> is a Boolean value. Set to False for basic function.<BR>
+Set to True minimizes all windows before displaying newly-active window. <BR><BR>
+
+<B>Return:</B><BR>
+0-ok. 1-no windows found. 2-no match for text.<BR>
+3-already active. 4 - method failed. 5-error.<BR><BR>
+
+<B>Notes:</B> If the active window was just changed before this function is<BR>
+called the new foreground window may not display as active even though<BR>
+it receives input. There seems to be a slight lag between the time that <BR>
+changes are made and the time that such changes are registered by the shell.<BR>
+&#160; Also, in rare cases the function may not work with a particluar active<BR>
+window because it's not receiving messages. The vBoolMin parameter provides  <BR>
+a more dependable means of ensuring success by minimizing all windows and  <BR>
+pausing briefly before setting the new foreground window.<BR><BR>
+
+The vTitle parameter can be found by using GetOpenWindowTitles:<BR>
+</FONT><FONT FACE="arial" COLOR="#000000" SIZE=3>
+<PRE>
+ v = Sys.GetOpenWindowTitles(a)
+    If v &#62; 0 Then
+      For i = 0 To UBound(a)
+          If InStr(1, a(i), "Notepad", vbTextCompare) &#60;&#62; 0 Then
+             s = a(i)
+             Exit For
+          End If
+      Next
+       If s &#60;&#62; "" Then
+         v = Sys.SetWindowActive(s, True)
+       End If
+    end if
+</PRE>
+</FONT><FONT FACE="arial" COLOR="#000000" SIZE=2>
+<BR>
+<A HREF="#top">Back to Top</A><BR><BR>
+
+<!-- ----------------------------------------------------------------------------------  -->
+<HR>
+<A NAME="closeprog"></A>
+<H4>Sub CloseProgram(vTitle, vForce)</H4>
+&#149; Close a running program.<BR>
+ex.: sys.CloseProgram "Untitled - Notepad", 2 <BR><BR>
+
+<B>vTitle</B> is title bar text of program to close.<BR><BR>
+<B>vForce</B> may be 1 or 2.<BR>
+1 - Equivalent to user closing. Program may ask to save text, etc.<BR>
+2 - System tells the program to close.<BR><BR>
+
+A vForce value of 2 will close the program immediately and is the<BR>
+Microsoft-recommended method for force-closing a program, allowing<BR>
+it to fully unload. In most cases this method works but occasionally<BR>
+it can cause a program crash: CloseProgram closes a <I>window</I>.<BR>
+In some cases a program may have more than one top-level window<BR>
+or the program may not provide for shutdown through the window closed.<BR>
+&#160; Oddly, this method seems not to work with Internet Explorer.<BR><BR>
+
+The GetOpenWindowTitles function can be used to get the title needed<BR>
+for the vTitle parameter. For example, to close all instances of Notepad, <BR>
+assuming A1 to be the array returned from GetOpenWindowTitles:<BR>
+</FONT><FONT FACE="arial" COLOR="#000000" SIZE=3>
+<PRE>
+ For i = 0 to UBound(A1)
+   If Instr(1, A1(i), "Notepad", 1) &#60;&#62; 0 Then
+      Sys.CloseProgram A1(i), 1
+   End If
+ Next
+</PRE>
+</FONT><FONT FACE="arial" COLOR="#000000" SIZE=2>
+<BR>
+<A HREF="#top">Back to Top</A><BR><BR>
+
+<!-- ------------------------DIALOGUES   ----------------------------------------------------------  -->
+<HR>
+<A NAME="odlg"></A>
+<H4>Function OpenDlg(vTitle, vExt, vInitDir)</H4>
+&#149; Show the File Open dialogue.<BR>
+ex.: r = sys.OpenDlg("Open File", "txt", "C:\")<BR><BR>
+
+<B>vTitle</B> is title for window.<BR>
+<B>vExt</B> is default file extension. May be "".<BR>
+<B>vInitDir</B> is folder path to start in. May be "".<BR><BR>
+
+<B>Return:</B><BR>
+Returns path of file selected or "" if cancelled.<BR><BR>
+
+<B>Notes:</B> If vExt is used only that type of file will show in dialogue.<BR>
+If vExt is "" selection will be for "All Files(*.*)"<BR>
+If vInitDir is used dialogue will open with that path. If vInitDir is ""<BR>
+dialogue will open with default (typically "My Documents" or last<BR>
+folder browsed).<BR>
+&#160; Existence of file path should be checked on return. Though the<BR>
+dialogue should not return a non-existent path according to Windows<BR>
+documentation, it nevertheless will.<BR>
+
+<BR>
+<A HREF="#top">Back to Top</A><BR><BR>
+
+<!-- ------------------------DIALOGUE multi  ----------------------------------------------------------  -->
+<HR>
+<A NAME="mdlg"></A>
+<H4>Function OpenMultiDlg(vTitle, vExt, vInitDir)</H4>
+&#149; Show the File Open dialogue with multi-select option.<BR>
+ex.: r = sys.OpenMultiDlg("Select Files", "txt", "C:\")<BR><BR>
+
+<B>vTitle</B> is title for window.<BR>
+<B>vExt</B> is default file extension. May be "".<BR>
+<B>vInitDir</B> is folder path to start in. May be "".<BR><BR>
+
+<B>Return:</B><BR>
+Returns path(s) of file(s) selected or "" if cancelled.<BR>
+If more than one file is selected return will be an asterisk-delimited<BR>
+string of paths: "C:\Windows\file1.txt*C:\Windows\file2.txt, etc...<BR>
+(An asterisk is used because it's an "illegal" character in file names.)<BR><BR>
+
+<B>Notes:</B> If vExt is used only that type of file will show in dialogue.<BR>
+If vExt is "" selection will be for "All Files(*.*)"<BR>
+If vInitDir is used dialogue will open with that path. If vInitDir is ""<BR>
+dialogue will open with default (typically "My Documents" or last<BR>
+folder browsed).<BR>
+&#160; Multi-selection is done by holding down the Ctrl key while selecting.<BR>
+
+<BR>
+<A HREF="#top">Back to Top</A><BR><BR>
+
+<!-- ------------------------DIALOGUE save ----------------------------------------------------------  -->
+<HR>
+<A NAME="sdlg"></A>
+<H4>Function SaveDlg(vTitle, vExt)</H4>
+&#149; Show the File Save dialogue.<BR>
+ex.: r = sys.SaveDlg("Save File", "log")<BR><BR>
+
+<B>vTitle</B> is title for window.<BR>
+<B>vExt</B> is default file extension. May be "".<BR>
+<BR>
+
+<B>Return:</B><BR>
+Returns file path selected or "" if cancelled.<BR><BR>
+
+
+<B>Notes:</B> The default file extension for Save is TXT. If vExt is not used <BR>
+Save options will be TXT and "All Files". If vExt is used Save options will be<BR>
+vExt extension and "All Files".<BR>
+  &#160; With the Save dialogue the default extension will be appended when the<BR>
+file name has none or has an invalid extension. This is true even when "All Files" <BR>
+is selected. For example, if vExt is "bmp", then the user sets it to "All Files" and enters <BR>
+"picfile", the return will be Path + "picfile.bmp". If the file name entered is "picfile.zzz"<BR>
+the invalid extension "zzz" is assumed to be part of the file name. The return would<BR>
+then be Path + "picfile.zzz.bmp"<BR>
+
+<BR>
+<A HREF="#top">Back to Top</A><BR><BR>
+
+<!-- ------------------------DIALOGUE color ----------------------------------------------------------  -->
+<HR>
+<A NAME="cdlg"></A>
+<H4>Function ColorDlg()</H4>
+&#149; Show the Choose Color dialogue.<BR>
+ex.: r = sys.ColorDlg<BR><BR>
+
+<B>Return:</B><BR>
+Returns selected color as 6-character hex code.<BR>
+If dialogue is cancelled "0" will be returned. Return can<BR>
+be checked with: If Len(r) = 6 Then ....<BR><BR>
+
+<A HREF="#top">Back to Top</A><BR><BR>
+
+<!-- ------------------------DIALOGUE BrowseForFolder----------------------------------------------------------  -->
+<HR>
+<A NAME="brffol"></A>
+<H4>Function BrowseForFolder(vTitle)</H4>
+&#149; Show folder browsing dialogue.<BR>
+ex.: r = sys.BrowseForFolder("Please select folder.")<BR><BR>
+
+<B>vTitle</B> is caption to show near top of browsing window.<BR><BR>
+
+<B>Return:</B><BR>
+Returns selected folder path.<BR>
+If dialogue is cancelled "" will be returned. <BR><BR>
+
+<B>Notes:</B><BR>
+&#160;&#160; 
+The BrowseForFolder function is available from the Shell.Application<BR>
+object but it is tedious to use and does not seem to be dependable <BR>
+across all Windows versions. This BrowseForFolder function works the same <BR>
+way as the Shell.App. version but should work with any Windows version from <BR>
+Win95 up. (Requires SHELL32.DLL min. version 4.71.).<BR><BR>
+
+<A HREF="#top">Back to Top</A><BR><BR>
+
+
+<!-----------------------////////////// PEFile Object ////////////////----------------------------------- -->
+<HR>
+<A NAME="pefil"></A>
+<H4>PEFile Object</H4>
+
+PEFile is an object accessed through the Ops object, similar to the File object<BR>
+accessed through FileSystemObject. PEFile provides properties information for PE<BR>
+(portable executable) files, including EXE, DLL, OCX and DRV. This is the same<BR>
+information available on the "General" and "Version" tabs when a PE file is right-clicked<BR>
+and the "Properties" menu is clicked.<BR><BR>
+
+<B>To access the PEFile object:</B><BR>
+Set Ob = sys.GetPEFile(FilePath)<BR><BR>
+
+If the method fails it will raise an error. Error trapping may be desired with this method.<BR>
+Possible errors: 1-file path not valid. 2-not a PE file. 3-unable to get file info. 4-unknown error.<BR><BR>
+
+GetPEFile returns a PEFile object.<BR><BR>
+
+<B>PEFile properties:</B><BR>
+
+Property CompanyName  (ex.: "Ace Audio Co.")<BR>
+Property FileVersion  (ex.: 1.02.44.0113)<BR>
+Property DateCreated (ex.: "4/23/99 10:22:00 PM") [returns "" if no date available.]<BR>
+Property DateLastModified (ex.: "4/23/99 10:22:00 PM")<BR>
+Property ProductVersion - version of software product of which file is a part.<BR>
+Property ProductName - (ex.: "Ace Music Player")<BR>
+Property FileDescription - (ex.: "Ace Music Player Audio Library")<BR>
+Property Size - size of file in KB.<BR>
+Property Attributes - file attributes. Returns any combination of typical attributes:<BR>
+&#160; &#160; &#160; 0-normal/archive. 1-ReadOnly. 2-Hidden. 4-System.<BR>
+Property Name (ex.: "AMPAUD.DLL")<BR><BR>
+
+
+<A HREF="#top">Back to Top</A><BR><BR>
+
+<!-- ---------------------888888888888   INIEdit   8888888888888888-----------------------------------------  -->
+<HR>
+<A NAME="gisv"></A>
+<H4>Function GetIniSectionVals(vFilePath, vSection)</H4>
+&#149; Get a list of INI section Key-Value pairs.<BR>
+ex.: v = sys.GetIniSectionVals("C:\Windows\Program1.ini", "Settings") <BR><BR>
+
+<B>vFilePath</B> is full path of INI file.<BR>
+<B>vSection</B> is section name.<BR><BR>
+
+<B>Return:</B><BR>
+Returns all values in a section as key=value, in null-delimited string.<BR>
+Return may be assigned to array with a = Split(v, Chr(0))<BR>
+Returns "" if method fails.
+
+<BR><BR>
+<A HREF="#top">Back to Top</A><BR><BR>
+<!-- ----------------------------------------------------------------------------------  -->
+<HR>
+<A NAME="gisk"></A>
+<H4>Function GetIniSectionkeys(vFilePath, vSection)</H4>
+&#149; Get list of keynames in one INI section.<BR>
+ex.: v = sys.GetIniSectionKeys("C:\Windows\Program1.ini", "Settings") <BR><BR>
+
+<B>vFilePath</B> is full path of INI file.<BR>
+<B>vSection</B> is section name.<BR><BR>
+
+<B>Return:</B><BR>
+Returns all section key names in null-delimited string.<BR>
+Return may be assigned to array with a = Split(v, Chr(0))<BR>
+Returns "" if method fails.
+<BR><BR>
+<A HREF="#top">Back to Top</A><BR><BR>
+<!-- ----------------------------------------------------------------------------------  -->
+<HR>
+<A NAME="gisn"></A>
+<H4>Function GetIniSectionNames(vFilePath)</H4>
+&#149; List all section names in INI file.<BR>
+ex.: v = sys.GetIniSectionNames("C:\Windows\Program1.ini")<BR><BR>
+
+<B>Return:</B><BR>
+Returns all INI section names in null-delimited string.<BR>
+Return may be assigned to array with a = Split(v, Chr(0))<BR>
+Returns "" if method fails.
+
+<BR><BR>
+<A HREF="#top">Back to Top</A><BR><BR>
+<!-- ----------------------------------------------------------------------------------  -->
+<HR>
+<A NAME="giv"></A>
+<H4>Function GetIniVal(vFilePath, vSection, vKeyName)</H4>
+&#149; Get one value from INI file.<BR>
+ex.: v = sys.GetIniVal("C:\Windows\Program1.ini", "Settings", "Backcolor")<BR><BR>
+
+<B>Return:</B><BR>
+Returns one value from INI file key. Returns "" if method fails or file does not exist.
+<BR><BR>
+<A HREF="#top">Back to Top</A><BR><BR>
+<!-- ----------------------------------------------------------------------------------  -->
+<HR>
+<A NAME="wis"></A>
+<H4>Function WriteIniSection(vFilePath, vSection, vKeyList)</H4>
+&#149; Write a section with keys to INI file.<BR>
+ex.: r = sys.WriteIniSection("C:\Windows\Program1.ini", "Settings", s)<BR><BR>
+
+<B>vFilePath </B>is full path of any .INI file.<BR>
+<B>vSection</B> is name of new INI section to write.<BR>
+<B>vKeyList</B> must be a string of key-value pairs delimited by Chr(0) with Chr(0) at end.<BR>
+        Ex.:   s = "key1=value1" & chr(0) & "key2=value2" & chr(0) & "key3=value3" & chr(0)<BR><BR>
+
+<B>Return:</B><BR>
+Returns True on success, False on error.
+                     
+
+<BR><BR>
+<A HREF="#top">Back to Top</A><BR><BR>
+<!-- ----------------------------------------------------------------------------------  -->
+<HR>
+<A NAME="wiv"></A>
+<H4>Function WriteIniVal(vFilePath, vSection, vKeyName, vValue) </H4>
+&#149; Write one value or delete one key or section in INI file.<BR>
+<B><I>WriteIniVal is used for writing values AND for deleting keys or sections.</I></B><BR><BR>
+
+<B>To write a value: </B><BR>
+r = sys.WriteIniVal("C:\Windows\Program1.ini", "Settings", "BackColor", "0000FF")<BR><BR>
+
+
+<B>To delete a key use "null" for vValue parameter: </B><BR>
+r = sys.WriteIniVal("C:\Windows\Program1.ini", "Settings", "BackColor", "null") '--deletes "Backcolor" key.<BR><BR>
+          
+<B>To delete a section use "null" for both vKeyName and vValue parameters:</B><BR>
+ r = sys.WriteIniVal("C:\Windows\Program1.ini", "Settings", "null", "null") '--deletes "Settings" section.<BR><BR>
+
+<B>Return:</B><BR>
+Returns True on success, False on error.
+                     
+<BR><BR>
+<A HREF="#top">Back to Top</A><BR><BR>
+
+<!-- /////////////////////////////////////////// STREAMOPS OBJECT //////////////////////////////////////////// -->
+
+<H4> StreamOps Object</H4>
+
+<!-- ------------- isntfs---------------------------------------------------------------------  -->
+<HR>
+<A NAME="isnt"></A>
+<H4>Function IsNTFS() </H4>
+&#149; Is this an NTFS file system?.<BR><BR>
+
+<B>Return:</B><BR>
+Returns True if file system is NTFS, False otherwise. (ADS files are only possible on NTFS.)
+
+<BR><BR>
+<A HREF="#top">Back to Top</A><BR><BR>
+
+<!-- -------------  ListStreams ---------------------------------------------------------------------  -->
+<HR>
+<A NAME="listads"></A>
+<H4>Function ListStreams(vFilePath, AFiles, ASizes) </H4>
+&#149; Returns a list of ADS files attached to a given file or folder.<BR><BR>
+Ex.: LNum = Ob.ListStreams("C:\", AFils, ASz)<BR><BR>
+
+<B>vFilePath:</B> Full path to file or folder.<BR>
+<B>AFiles:</B> Returns an array of file names.<BR>
+<B>ASizes:</B> Returns an array of file sizes in bytes.<BR><BR>
+
+<B>Return:</B><BR>
+Returns number of ADS files found, 0 if no files found.
+
+<BR><BR>
+<A HREF="#top">Back to Top</A><BR><BR>
+
+<!-- -------------  ReadStream ---------------------------------------------------------------------  -->
+<HR>
+<A NAME="readads"></A>
+<H4>Function ReadStream(vFilePath, vLen) </H4>
+&#149; Reads part or all of an ADS file as text string.<BR><BR>
+Ex.: s = Ob.ReadStream("C:\file1.txt:stream1.txt", 0)<BR><BR>
+
+<B>vFilePath:</B> Full path of ADS file. ADS file paths have the format of [filepath]:[ads name].<BR>
+<B>vLen:</B> Number of bytes to read. Use 0 to read entire file.<BR><BR>
+
+<B>Return:</B><BR>
+Returns a text string. <BR><BR>
+
+<B>Notes:</B>
+This method is designed for reading text. It will return unpredictable results if the ADS is a binary file because the 
+returned string will be clipped at the first null character. In many cases there is no useful/readable content in an ADS file.
+(One exception would be the zone ID ADS that Internet Explorer attaches to downloaded files.) The idea with the
+JSSys3 ADS functions is the monitoring and cleaning of potentially malefic ADS files, rather than the creation and management of them.
+<BR><BR>
+<A HREF="#top">Back to Top</A><BR><BR>
+
+<!-- -------------  DeleteStream ---------------------------------------------------------------------  -->
+<HR>
+<A NAME="delads"></A>
+<H4>Sub DeleteStream(vFilePath) </H4>
+&#149; Deletes an ADS file.<BR><BR>
+Ex.: s = Ob.DeleteStream("C:\file1.txt:stream1.txt")<BR><BR>
+
+<B>vFilePath:</B> Full path of ADS file to be deleted. ADS file paths have the format of [filepath]:[ads name].
+
+<BR><BR>
+<A HREF="#top">Back to Top</A><BR><BR>
+
+<!-- ----------------------------------------------------------------------------------  -->
+
+<HR>
+<A NAME="note"></A>
+<H4>Update Notes</H4>
+
+<H5> Changes in Version 3.09.1029 </H5>
+* Added functions for handling Alternate Data Streams (ADS). ADS files are invisible files
+that can be attached to any file or folder. Each file or folder can have any number or size
+of attached ADS files, but ADS files are not shown by Explorer. Nor is their size counted
+in Explorer's disk information. ADS files are only possible on NTFS-formatted partitions.<BR><BR>
+
+*FIX: Graphical memory leak fixed. The functions to return screen size in pixels and display color depth both use
+a "device context" or DC. A DC is a graphical reference to a window. There is a limit
+to the number of DCs available. On Win9x that limit is 1,200. On WinNT it is typically
+between 10,000 and 16,000+. The two functions mentioned were allocating a DC without
+later releasing it. On a system that is operating at the upper limit of its graphical capacity
+that behavior could conceivably have an effect on display.<BR><BR>
+
+<H5> Changes in Version 3.09.128 </H5>
+* A single change: The function <B>OpenMultiDlg</B> has been adapted for large
+file lists. The original version could return a list of files up to 1 KB in length. That
+limit is now 8 KB. (8192 bytes/characters)<BR><BR>
+
+<H5> Changes in Version 3.06.126 </H5>
+* Only a single change: GetProcessList function was only returning file names
+on Windows XP. It should have been returning full paths. That has been fixed.<BR><BR>
+
+<H5> Changes in Version 3.04.1204 </H5>
+* Only a single, small change: The SetWallpaper function now has the ability
+to also remove wallpaper.<BR><BR>
+
+<H5> Changes in Version 3.04.0829 </H5>
+
+* BrowseForFolder function to show folder browsing dialogue.<BR><BR>
+* INI file functions adjusted for limitations in length of returned strings.<BR>
+The INI functions were limited to a 1 KB return string. That was normally enough<BR>
+but in some cases, with a very large INI file, a function such as GetINISectionNames<BR>
+might not have returned all names if they totalled more than 1024 characters.<BR>
+The limit has been adjusted to 4KB, enough to return, for example, more than<BR> 
+160 25-character values.<BR><BR>
+
+<H5> Changes in Version 3.03.1118 </H5>
+
+No significant change; only a minor tweak to SetWallpaper function.<BR><BR>
+
+<H5> Changes in Version 3.03.0225</H5>
+* Support added for REG_MULTI_SZ values in RegGetValue and RegWriteValue.<BR><BR>
+
+<H5> Changes in Version 3.03.0216</H5>
+<B>Two minor changes have been made to existing methods:</B><BR><BR>
+
+* ChangeDriveName - was a sub; is now a function. Returns 0 on success or 1 on failure.<BR><BR>
+* RegWriteValue - option added to write a REG_EXPAND_SZ value. vType parameter is "X".<BR><BR>
+
+<B>New functions:</B><BR><BR>
+
+* RegDeleteVal - deletes a Registry value.<BR>
+This function was added for completeness. The only advantage over Shell.RegDelete <BR>
+is that it can handle values that contain a backslash.<BR><BR>
+
+* RegDeleteSubkey - deletes a Registry key.<BR>
+ On WinNT versions a Registry key cannot be deleted if it has subkeys. RegDeleteSubkey was<BR>
+  added to accomodate the need to delete NT Registry keys without necessarily knowing what<BR>
+ subkeys may exist. On Win9x this function simply deletes the key. On Win NT4/2000/XP it<BR>
+  first performs a reverse, recursive deletion of keys under the key to be deleted and then deletes <BR>
+the key. The last part of the path to be deleted is sent as the third parameter:<BR>
+    To delete "HKCU\key1\key2\key3\key4" the call would be:<BR>
+       r = sys.RegDeleteSubkey("HKCU", "key1\key2\key3", "key4")<BR><BR>
+
+* PEFile object - provides access to file properties of PE files.<BR>
+(see explanation above.)<BR><BR>
+
+* GetRegFromCLSID and GetRegFromProgID - 2 methods that can check for registered objects.<BR><BR>
+ 
+<A HREF="#top">Back to Top</A><BR><BR>
+<HR>
+
+<H5> Changes in Version 3.02.1023 from v. 2</H5>
+
+ &#160; &#160; A number of changes have been made to functions in JSSys3.<BR>
+It may be an inconvenience for those who have been using JSSys2. I apologize for<BR>
+the trouble. These changes seemed worthwhile to make the functions more consistent.<BR>
+&#160; &#160; Because of the changes the file/server name has been changed from JSSys to JSSys3.<BR>
+While both DLLs could be registered on the system it's recommended that JSSys.DLL<BR>
+be unregistered when JSSys3.DLL is installed.<BR><BR>
+
+With just a couple of exceptions the functions now follow one of two patterns: <BR><BR>
+
+1) The function returns a string, returning "" if the method fails.<BR>
+2) Data is returned in one or more of the calling parameters. The function return<BR>
+is an error code, with a return of 0 indicating success.<BR><BR>
+
+&#160; &#160; 
+As for the second approach: These functions return error codes wherever it might<BR>
+be useful, to provide useful information and/or to provide an easy, consistent way to <BR>
+check function returns. The data return is most often an array or a delimited string<BR>
+that can be changed to an array using the Split function. The error code returns<BR>
+allow for easy checking before handling the data:<BR>
+ex.:<BR>
+ If r = 0 then<BR>
+          a = Split(s, ",") ...etc.<BR><BR>
+
+
+<B>New functions include:</B><BR><BR>
+ Get and set system colors.<BR><BR>
+ Clipboard access for text.<BR><BR>
+ Timer - measures milliseconds.<BR><BR>
+Close a program.<BR><BR>
+Open, Save and Color dialogue functions. These are in the JSDlgBox component.<BR>
+They've been added here for convenience, with more options.<BR><BR>
+ 
+ Registry Writing - The new RegWriteVal will write a string, dword or binary value. <BR>
+This was added because many people want to write long binary values and WSH <BR>
+does not provide a way to do it.<BR><BR>
+
+Process List - Get a list of running processes in the form of executable paths.<BR>
+This is for 95/98/ME/2000/XP only. It will not work on NT4 systems.<BR><BR>
+
+
+
+Window functions - Get a list of open windows, find the active window, set <BR>
+the active window or close a program. These functions all deal with the window<BR>
+title bar text. With the GetOpenWindowTitles the title bar text of all open windows<BR>
+can be accurately known rather than just guessed at. <BR><BR>
+
+Between the 2 functions GetProcessList and GetOpenWindowTitles it should be<BR>
+possible to know what is currently running and which program is in use. That<BR>
+allows for a more functional use of SendKeys by being able to know and control<BR>
+the active program. Also, most programs can be closed. <BR><BR>
+
+<A HREF="#top">Back to Top</A><BR><BR>
+<HR><BR>
+
+<B>To register the component:</B> Just put it in the System folder and then<BR>
+drop it on the RegSvr.vbs script. The script can be used to register or unregister<BR>
+any registered file.<BR><BR>
+
+<B> To create the objects:</B><BR><BR>
+
+Dim ObIni<BR>
+Set ObIni = CreateObject("JSSys3.INIEdit")<BR><BR>
+
+Dim sys<BR>
+Set sys = CreateObject("JSSys3.Ops")<BR><BR>
+
+<B>Compatibility:</B><BR>
+&#149; GetProcessList cannot be used on NT4.<BR>
+&#149; Some system color settings will not show up on WinXP unless the "Classic" view is<BR>
+used. (The desperately cheerful, Mac-style interface options don't tolerate mitigation<BR>
+by such things as a custom Active Title Bar color.)<BR><BR>
+Aside from those exceptions these functions are for all versions of Windows from 95 up.<BR>
+All have been tested on Win98. Most have been tested on various other sytems,<BR>
+including WinXP.<BR><BR>
+
+<B>Registry terms:</B><BR>
+The Registry functions use standard Registry terms.<BR>
+<B>vKey</B> parameters refer to "nodes" or "hives" (HKEY_.......).<BR>
+<B>vRegPath</B> parameters refer to key path (Software\Windows\CurrentVersion...).<BR><BR>
+
+Registry "keys" are the folders in left side of Regedit window.<BR>
+"Values" are entry in left side of right window and "Data" is entry on right.<BR>
+Ex.: "CurrentVersion" is a key. "RegisteredOwner" is a Value. "Louie" is the value Data.<BR><BR>
+
+<B>INI File terms:</B><BR>
+&#160; &#160; INI files use terms similar to the Registry but the meaning<BR>
+is switched around:<BR>
+[Section]<BR>
+Key=Value<BR>
+Key=Value<BR>
+Key=Value<BR><BR>
+
+So a Registry key = an INI section, a Registry value = an INI Key<BR>
+and Registry Data = an INI value.<BR><BR>
+
+<A HREF="#top">Back to Top</A><BR><BR>
+<HR>
+
+<!---------------------------------------->
+<B>License:</B><BR><BR>
+
+&#160;&#160; You use all script code and components from JSWare at your own risk.<BR><BR>
+
+  &#160;&#160; The components (compiled DLL and EXE files) may be used for personal or
+commercial purposes. No payment or attribution is required for either use.
+The components may be redistributed if they are required as support files 
+for scripts or software that you have written.<BR>
+   &#160;&#160; Also, the script code may be used freely, in part or as whole scripts,
+for any purpose, personal or commercial, without payment or attribution.<BR><BR>
+
+  &#160;&#160; I ask only that you not redistribute these scripts and components, except
+as required for your direct use. Instead, please direct others to obtain copies
+of JSWare scripts and components directly from www.jsware.net.<BR><BR>
+
+ &#160;&#160; Also, none of the code here may be redistributed under another license. If a 
+work using code from JSWare is distributed with restrictions of any kind 
+the code from JSWare must be kept exempt from those restrictions. 
+This includes, but is not limited to, code sold for profit, code with usage restrictions
+and code distributed as so-called "Open Source" with redistribution restrictions. <BR><BR>
+
+    &#160; &#160;  Joe Priestley<BR><BR>
+</FONT></DIV>
+<HR>
+<DIV align="center">
+<FONT FACE="arial" COLOR="#000000" SIZE=3><B>
+ JSSys3.dll &#160;&#149;&#160; JSWare &#160;&#149;&#160; www.jsware.net &#160;&#149;&#160; jsware@jsware.net<BR>
+</B></FONT>
+<HR><BR>
+
+</DIV>
+</BODY></HTML>
+

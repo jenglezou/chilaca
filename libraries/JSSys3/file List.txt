@@ -1,0 +1,62 @@
+File List for JSSys3.dll pack v. 3.03.1118
+________________________________________
+
+The following is a brief description of included files.
+See comments in VBS file for more info.
+Note: Some scripts may have a hard-coded path that needs to be edited.
+
+________________________________________
+
+JSSys3.dll - the component. must be registered before use. (see RegSvr.vbs below)
+
+JSSys3 Functions.html  -  help file.
+
+INIEdit demo.vbs - demonstrates the INIEdit object methods.
+
+blah.ini - required for INIEdit demo.vbs 
+
+browse.vbs - demo of 4 browsing window functions: Fileopen, FileSave, etc.
+
+CPUdata-9x.vbs - reports CPU usage at 3 second intervals. (Win9x only)
+
+hardware-9x.vbs - compiles a listing of installed hardware and writes it to a
+                          file on C drive. (Win9x only)
+
+IDs.vbs - demonstrates the GetRegFromCLSID and GetRegFromProgID functions
+              by using the JSSys3.dll CLSID and ProgID.
+
+Ops Clip Demo.vbs - demonstrates the clipboard functions.
+
+Ops Demo 1.vbs - demo of various system functions.
+
+Ops Reg Demo.vbs - demo of Registry functions - creates a key, writes values, etc.
+
+props.vbs - demo of PEFile object. Drop an EXE or DLL file onto script for file 
+                 properties report.
+
+RegSvr.vbs - NOT a demo. This script is for registering the component. Put the
+                  DLL in the system folder, then drop it on RegSvr.vbs.
+                  Click YES to register a file, NO to unregister.
+
+syscols.vbs - demo of retrieving and changing system colors. 
+
+sysreg.vbs - demo of deleting keys and values; creates a key "tree", writes values,
+                  then deletes it all.
+
+Window Demo.vbs - demonstrates getting open windows, getting active window,
+                      setting active window and closing a program.
+
+StartMan.html - startup manager utility webpage. This was written with IE5.0.
+                   It seems not to work with IE4 because of changes in the IE DOM.
+
+StartManCom.html - same as StartMan.html but includes extensive comments
+                   in the code.
+
+ListADS.vbs - drop a folder onto script for demo of enumerating ADS files.
+
+ReadAndDeleteADS.vbs -  drop a folder onto script for demo of reading content of ADS files and deleting them.
+
+                   
+
+
+         

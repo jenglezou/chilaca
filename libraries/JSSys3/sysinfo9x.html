@@ -1,0 +1,128 @@
+ <HTML>
+<HEAD>
+<SCRIPT language="VBScript">
+ '-- This webpage compiles a list of installed hardware from the Registry.
+ '-- It Then saves the list in a Dictionary object, shows buttons on the page
+ '-- For different hardware categories, and shows the page.
+ '-- There will probably be an ActiveX warning when the page opens.
+ '-- When a button is clicked the system info. For that category is displayed.
+ '-- This page requires that JSSys3.DLL be on the machine and registered.
+ 
+Dim Dic, SH, Sys
+Set SH = CreateObject("WScript.Shell")
+Set Sys = createobject("JSSys3.Ops")
+Set Dic = CreateObject("Scripting.Dictionary")
+Sub GetList()
+Dim AList, i, i2, sKey, sType, sPath
+ On Error Resume Next
+     '--Get a list of subkeys from Dynamic Data hardware list:
+     
+    i2 = Sys.RegListKeys("HKDD", "Config Manager\Enum", AList)
+       If i2 <> 0 Then
+           t1.innertext = "Failure obtaining Registry Dynamic Data listing."
+           Exit Sub
+       End If
+       
+    '-- For Each key, check For a "HardWareKey" value. If it exists Call
+    '--Sub to Get info.:
+    
+  For i = 0 to ubound(AList)  
+     sKey = AList(i)
+     i2 = Sys.RegGetValue("HKDD", "Config Manager\Enum\" & sKey, "HardWareKey", sPath, sType)
+          If i2 = 0 and sType = "S" Then   
+                Call ListHardwareItem(sPath)
+          End If
+  Next
+  
+End Sub
+
+Sub ListHardwareItem(s1)
+  '--this Sub gets device info. For Each device listed in HKDD\Config Manager\Enum
+  '--it Then adds info to dictionary (Dic) key based on Class name so that when a button
+  '--is clicked the data can be loaded from the respective key.
+   Dim sClass, sListing, s2, sDic, pDriv
+    On Error Resume Next
+    pDriv = "HKLM\System\CurrentControlSet\Services\Class\"
+ 
+   '--first Get device name and description:
+   
+    sClass = SH.RegRead("HKLM\Enum\" & s1 & "\Class")
+      sListing = "Device Description: " & SH.RegRead("HKLM\Enum\" & s1 & "\Devicedesc") & VbCrLf
+      sListing = sListing & "Manufacturer: " & SH.RegRead("HKLM\Enum\" & s1 & "\Mfg") & VbCrLf
+  
+  '--Next check whether driver info. is available:
+  
+      s2 = SH.RegRead("HKLM\Enum\" & s1 & "\Driver")
+        If Len(s2) > 0 Then
+           sListing = sListing & "Driver: " & SH.RegRead(pDriv & s2 & "\Driver") & VbCrLf
+           sListing = sListing & "Driver Date: " & SH.RegRead(pDriv & s2 & "\DriverDate") & VbCrLf 
+           sListing = sListing & "Driver Description: " & SH.RegRead(pDriv & s2 & "\DriverDesc") & VbCrLf 
+           sListing = sListing & "Related INF File: " & SH.RegRead(pDriv & s2 & "\InfPath") & VbCrLf 
+           sListing = sListing & "Provider: " & SH.RegRead(pDriv & s2 & "\ProviderName") & VbCrLf & vbcrlf
+        Else
+           sListing = sListing & "No driver information available." & VbCrLf & vbcrlf 
+        End If
+        
+    '--If Dic key exists, add new data to it. If Not exist, create new Dic key with data as Key Item.
+   If Dic.Exists(sClass) Then
+       sDic = Dic.Item(sClass) & sListing
+       Dic.Item(sClass) = sDic
+   Else
+     Dic.Add sClass, sListing
+   End If
+         
+End Sub
+
+Sub ShowInfo()
+  '--Sub to show info when button is clicked. Button IDs match
+  '--Class categories used in Registry. Class category was used For
+  '-- Dic key name. So just check For a key with button ID name.
+  '-- If it's there print the Item data in lower <TD>.
+ Dim sInfo, sClsName
+   sClsName = window.event.srcElement.ID
+      If Dic.Exists(sClsName) = True Then
+         sInfo = Dic.Item(sClsName)
+         t1.innertext = sInfo 
+      Else
+        t1.innertext = "No listings of type " & sClsName & " found."   
+      End If 
+End Sub
+</SCRIPT>
+
+<TITLE>System Info</TITLE>
+</HEAD>
+
+<BODY BGCOLOR="#0000A0" onload="GetList()">
+<DIV align="center">
+<FONT FACE="arial" COLOR="#FFFFFF" SIZE=3>
+<BR>
+<B>System Information For Windows 95/98/ME</B> </FONT>
+<BR><BR>
+<FONT FACE="arial" COLOR="#0000A0" SIZE=2>
+<TABLE BORDER=1>
+
+<TR><TD BORDERCOLOR="#0000A0" BGCOLOR="#00C4C4" >
+<input ID="MEDIA" TYPE="button" VALUE="Media " onclick="ShowInfo()">   
+<input ID="Display" TYPE="button" VALUE="Display" onclick="ShowInfo()">    
+<input ID="DiskDrive" TYPE="button" VALUE="Drives " onclick="ShowInfo()">    
+<input ID="Net" TYPE="button" VALUE="Network" onclick="ShowInfo()">      
+<input ID="Monitor" TYPE="button" VALUE="Monitor" onclick="ShowInfo()">      
+<input ID="Mouse" TYPE="button" VALUE="Mouse " onclick="ShowInfo()">        
+<input ID="Keyboard" TYPE="button" VALUE="Keyboard" onclick="ShowInfo()"> 
+<input ID="CDROM" TYPE="button" VALUE="  CD  " onclick="ShowInfo()">        
+<input ID="Modem" TYPE="button" VALUE="Modem " onclick="ShowInfo()">    
+<input ID="Ports" TYPE="button" VALUE=" Ports " onclick="ShowInfo()">      
+<input ID="System" TYPE="button" VALUE="System" onclick="ShowInfo()">   
+</TD>
+</TR>
+
+<TR>
+<TD VALIGN="top" HEIGHT=500 BORDERCOLOR="#00C4C4" BGCOLOR="#DDEDFF" ID="t1">
+</TD>
+</TR>
+
+</TABLE>
+</FONT>
+</DIV"
+</BODY></HTML>
+

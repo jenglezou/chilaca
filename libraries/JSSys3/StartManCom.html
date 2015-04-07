@@ -1,0 +1,460 @@
+<HTML>
+<HEAD>
+<TITLE>Startup Manager Utility</TITLE>
+<SCRIPT LANGUAGE="VBScript">
+Dim Sys, FSO, SH, StartUpFol, WinFol, ACount, SysFol, r, A1, INIOb, sINI, KRun, KRunServ, Opt, CR2, sID
+ CR2 = vbcrlf & vbcrlf
+ 
+'-- ***NOTE: This webpage utility requires the version of JSSys3.DLL that includes the PEFile object.
+'-- At least version 3.03.0216
+'
+ '-- startup Sub. this sets the font in Select list box (ID=Box1) and in the file properties TD (ID=TProps).
+ '-- it also sets up an array For 5 locations of startup settings. Settings can be in Registry under
+ '-- HKLM Run or RunServices keys, or HKCU Run or RunServices keys. that's 4 keys total. A startup program
+ '--can also operate through a LNK file in Start Menu\Programs\Startup. The last (6th) startup setting location
+ '-- is in WIN.INI, windows section, "load" or "run" values. (Most settings are in HKLM Run subkey.)
+ '
+ '-- The ACount array holds the count of settings found in Each location as a way to give Each setting a unique ID.
+ '-- The way this works: Each location is checked. For Each setting found an OPTION is added to the Select list
+ '--  box. Fortunately, the OPTION element can hold 3 separate text values so no INI file, Dictionary, Collection,
+ '--  etc. is needed to track the startup data; IE holds it.
+ '
+ '--     1) Option.ID: the location is encoded as a 3-letter code and a number is added (based on ACount value) to
+ '-- create a unique ID. For example, the first item found in HKLM\...\Run will have the ID "LMR0". The 2nd
+ '-- will have the ID "LMR1". The ID value enables keeping track of setting location If setting needs to be removed.
+ '--     2) Option.Value: The value attribute holds the value name For Registry entries, the LNK path For
+ '-- startup folder entries, and the keyname For WIN.INI entries.
+ '--     3) Option.Text: The text attribute is what appears in the Select box - the path of EXE file.
+ '
+ '-- So Each Option holds all info. needed to remove that program from startup. When Remove is clicked 
+ '-- the script just needs to Get which OPTION is currently selected and retrieve ID, Value and Text strings.
+ 
+ Sub window_onload()
+      Box1.style.fontfamily = "arial"
+      Box1.style.fontsize = 10
+      TProps.style.fontfamily = "arial"
+      TProps.style.fontsize = 12
+        '--array to track count For OPTION IDs. 0-LMR, 1-LMS, 2-CUR, 3-CUS, 4-LNK 5-WIN
+        '--will hold number of items. count is 1-based. index names are 0 base.
+        '-- in other words, first item found in HKLM\...\Run will Get the ID "LMR0" and ACount(0) 
+        '-- will have 1 added to it, making array values 1,0,0,0,0,0.
+      ACount = array(0, 0, 0, 0, 0, 0)  
+ End Sub
+  
+'--//////////////////////--- main Sub ----////////////////////////////----
+ '-- Get list of startup programs when Get List button is clicked:
+    
+Sub ButList_onclick()
+
+ Box1.Options.Length = 0
+ 
+Set FSO = CreateObject("Scripting.FileSystemObject")
+Set SH = CreateObject("WScript.Shell")   '--create Shell to handle shortcuts (LNK files).
+Set Sys = CreateObject("JSSys3.Ops")   '-- Create JSSys3.ops to handle registry key enum.
+Set INIOb = CreateObject("JSSys3.INIEdit") '-- Create INIEdit to handle WIN.INI read.
+
+'--these are the keys, in both HKLM and HKCU, where startup settings may have been written:
+
+ KRun = "Software\Microsoft\Windows\CurrentVersion\Run"
+ KRunServ = "Software\Microsoft\Windows\CurrentVersion\RunServices"
+ 
+'--Get startup folder path. Also Get Win and Sys path because some Reg. entries may Not
+'-- have full path. For example, If Registry entry is "Taskmon.exe" that's Not a valid path
+'--For getting file properties, so path will be tested as %WinDir$\Taskmon.exe and %SysDir%\Taskmon.exe.
+
+StartUpFol = SH.Specialfolders("StartUp") '--start menu startup - Get link files in startup folder.
+WinFol = FSO.GetSpecialFolder(0)  '--windows folder - Get Load and Run values in WIN.INI
+SysFol = FSO.GetSpecialFolder(1) '--system folder
+
+'------- Get Registry values:
+'-- use JSSys3 to Get a list of string value/data pairs from Registry.
+'-- If anything is returned, send it to AddToList Sub to read string and
+'--Set up an OPTION For Each Registry entry.
+
+r = Sys.RegListStringData("HKLM", KRun, A1)
+  If (r = 0) Then
+     AddToList A1, "LMR", 0
+  End If
+  
+r = Sys.RegListStringData("HKLM", KRunServ, A1)
+  If (r = 0) Then
+     AddToList A1, "LMS", 1
+  End If
+  
+r = Sys.RegListStringData("HKCU", KRun, A1)
+   If (r = 0) Then
+     AddToList A1, "CUR", 2
+  End If
+   
+r = Sys.RegListStringData("HKCU", KRunServ, A1)
+  If (r = 0) Then
+     AddToList A1, "CUS", 3
+  End If
+ 
+'-- Registry done.
+'-- Get startup links:
+Dim oFol, oFil, LnkName, LnkOb, LnkPath, ALnks(), iA
+ On Error Resume Next
+       iA = -1
+        '-- Get Start Menu\Programs\Startup folder and check For LNK files:
+        
+    Set oFol = FSO.GetFolder(StartUpFol)
+       For Each oFil in oFol.Files
+         LnkName = oFil.Name
+           If UCase(Right(LnkName, 3)) = "LNK" Then
+              LnkName = oFil.Path
+                Set LnkOb = SH.CreateShortcut(LnkName)
+                   LnkPath = LnkOb.TargetPath
+                Set LnkOb = Nothing   
+                     If FSO.FileExists(LnkPath) = True Then   
+                         LnkName =  LnkName & "^" & LnkPath  '--key is lnk file path, value is target path.
+                          iA = iA + 1  
+                         ReDim preserve ALnks(iA)
+                         ALnks(iA) = LnkName
+                     End If       
+           End If
+      Next
+ Set oFol = Nothing
+     '--If any shortcuts found add them to startup list.
+    If (iA > -1) Then
+        AddToList ALnks, "LNK", 4
+    End If
+    
+'--Links done. Check For load=   and/or   run=   values in WIN.INI:
+
+Dim s, s1, i7
+If FSO.FileExists(WinFol & "\WIN.INI") = True Then
+     s = INIOb.GetIniVal(WinFol & "\WIN.INI", "windows", "load")
+     s1 = INIOb.GetIniVal(WinFol & "\WIN.INI", "windows", "run")
+   
+ '--since there are just 2 possibilities here they have their own version
+ '-- of adding an OPTION to the Select box, instead of using AddToList:
+ 
+    If (len(s) > 0) Then 
+        Set Opt = document.createElement("OPTION")
+           Opt.text = s '--program path.
+           Opt.value = "load"  '--reg. value, WIN.INI key or LNK file path.
+           Opt.ID = "WIN0"   '--identifies this lisating as having come from WIN.INI.
+           box1.Add Opt
+        Set Opt = Nothing  
+          ACount(5) = 1  
+    End If
+     
+    If (len(s1) > 0) Then 
+        Set Opt = document.createElement("OPTION")
+            Opt.text = s1 '--program path.
+            Opt.value = "run"  '--reg. value, WIN.INI key or LNK file path.
+            Opt.ID = "WIN1"
+            box1.Add Opt
+        Set Opt = Nothing   
+      i7 = ACount(5)
+      i7 = i7 + 1
+      ACount(5) = i7  
+    End If
+ End If  
+ 
+  '-- these objects are being created per-Sub rather than globally so that the
+  '-- page can load and be read without any security warnings. The warning message
+  '-- comes when GetList button is clicked.
+    
+Set INIOb = Nothing
+Set Sys = Nothing
+Set SH = Nothing
+Set FSO = Nothing
+End Sub
+
+'--//////// AddToList Sub - processes all settings except from WIN.INI --////////////////////////
+
+'-- addtolist: array of values, setting location category, index For ACount array.
+'-- adds startup items to Select as OPTIONs, using OPTION properties
+'-- to hold EXE path, access info. and category (registry key, startupfolder, etc.)
+'-- A6 is array of settings, sCat is 3-letter code For location settings came from.
+'-- iCount will be 0 For LMR, 4 For LNK, etc. The iCount value will be the array index
+'--of ACount that's used For creating unique IDs and counting settings.
+
+Sub AddToList(A6, sCat, iCount)
+  Dim i6, s6, Pt6, sK6, sV6, iAc, PtE
+   On Error Resume Next
+      '--process array sent as A6 parameter. For Registry settings it will be an array of key/value pairs
+      '-- Set up like: "SpywareApp^C:\Program Files\Sleazeware\SpywareApp.exe"
+      '-- If list is from startup folder links it will be like: linkpath^linktarget
+      '--either way, the second half after "^" is the program Set to run at startup and will be
+      '--listed as the text of the OPTION. The first part is needed to remove the program from startup
+      '-- and is assigned to OPTION.value.
+      
+   For i6 = 0 to UBound(A6)
+        s6 = A6(i6)      
+        Pt6 = InStr(1, s6, "^", 1)
+        
+           '-- If there's a "^" in the string and it's Not something run by RunDLL Then split
+           '--the string into left half (registry value or LNK path) and right half (exe path).
+           '-- assign left half to OPTION.Value. assign exe path to OPTION.Text. Create a unique ID For Option.ID:
+           
+        If (Pt6 <> 0) and (Pt6 <> Len(s6)) and (InStr(1, s6, "RunDLL32.exe", 1) = 0) Then
+           sV6 = Right(s6, (len(s6) - Pt6))  '--save value data(exe path) For option text.
+            '-- snip off command options If present:
+                PtE = InStrRev(sV6, ".exe", -1, 1)
+                If (PtE <> 0) Then sV6 = Left(sV6, (PtE + 3))
+           sK6 = Left(s6, (Pt6 - 1))           '-- save value name For option value.
+           iAc = ACount(iCount)
+           sID = sCat & CStr(iAc)    '--Get unique string For option ID. (ex.: "LMR1")
+           iAc = iAc + 1   '--increment count For array ACount value.
+           ACount(iCount) = iAc
+              Set Opt = document.createElement("OPTION")   '--create a new OPTION element.
+                  Opt.text = sV6 '--program path.
+                  Opt.value = sK6 '--reg. value, WIN.INI key or LNK file path.
+                  Opt.ID = sID     '--unique ID that tracks location of setting.
+                 box1.Add Opt
+              Set Opt = Nothing   
+        End If
+      Next       
+End Sub
+
+'--/////////////// Remove button Sub --//////////////////////--------
+
+Sub ButRem_onclick()
+  Dim sVal, sEXE, iSel, L3, sDelVal
+         If (Box1.value = "0") Then Exit Sub  '--If Nothing selected Then quit.
+       On Error Resume Next  
+       
+   '--first, retrieve strings from currently selected OPTION.
+   '-- Text is EXE path. Value is Registry value name or LNK file path or WIN.INI key.
+   '-- ID is the 3-letter key created to track where setting is coming from.
+   
+    iSel = Box1.selectedindex
+    sEXE = Box1.Options(iSel).text
+    sVal = Box1.Options(iSel).value
+    sID =  Box1.Options(iSel).id
+  r = MsgBox("Remove " & sEXE & " from startup?", 36, "Confirm")  
+    If (r = 7) Then Exit Sub  
+    
+   '--Get the left 3 letters from the OPTION.ID string and Do a Select Case
+   '--to remove program from startup accordingly:
+  L3 = Left(sID, 3)
+   Select Case L3        
+        '-- If setting is Registry value, delete it:
+     Case "LMR", "LMS", "CUR", "CUS"
+           If L3 = "LMR" Then
+                sDelVal = "HKLM\" & KRun & "\" & sVal
+           ElseIf L3 = "LMS" Then
+                sDelVal = "HKLM\" & KRunServ & "\" & sVal  
+           ElseIf L3 = "CUR" Then
+                sDelVal = "HKCU\" & KRun & "\" & sVal 
+           Else
+                sDelVal = "HKCU\" & KRunServ & "\" & sVal   
+           End If    
+        Set SH = CreateObject("WScript.Shell")  
+           SH.RegDelete sDelVal
+        Set SH = Nothing  
+        
+         '--If setting is link file, delete it: 
+     Case "LNK"
+       Set FSO = CreateObject("Scripting.FileSystemObject")
+         If FSO.FileExists(sVal) = True Then
+           FSO.DeleteFile sVal, True
+         End If  
+       Set FSO = Nothing
+       
+       '--If setting is in WIN.INI remove it. sVal in this Case is either "run" or "load"
+       '-- this Next Call will write a "" string to that INI key.
+     Case "WIN"
+        Set INIOb = CreateObject("JSSys3.INIEdit") 
+           r = INIOb.WriteIniVal(WinFol & "\WIN.INI", "windows", sVal, "")
+        Set INIOb = Nothing
+    Case Else
+      MsgBox "Error. Unable to find information for removing this item.", 64
+      Exit Sub
+   End Select   
+    ButList.Value = "Refresh List"  '--change button caption "Get List" to "Refresh List"
+End Sub
+
+'--////////////// Properties button Sub - Get file properties of EXE file. --////////////////-----
+
+Sub ButProp_onclick()
+Dim sPath, FilOb, s3, iSel
+  If (Box1.value = "0") Then Exit Sub
+       '--this may take a second. It would be nice to inform that it's processing
+       '--but this seems to only work on the first run:
+    TProps.innertext = "Processing..."
+    
+      '--Get index of selected OPTION and retrieve OPTION.Text (exe path).
+      '-- (For some reason Box1.Options(SelectedIndex).Text doesn't seem to work.)
+    iSel = Box1.selectedindex
+    sPath = Box1.Options(iSel).text
+   Set FSO = CreateObject("Scripting.FileSystemObject")
+   
+      '--If path does Not exist try it with windows or system folder.
+      '--some of the things in startup registry settings will just be exe names,
+    '--  like "systray.exe". Anything like that should be in either the %Win% or %Sys% folder:
+    
+     If FSO.FileExists(sPath) = False Then
+       If FSO.FileExists(WinFol & "\" & sPath) Then
+          sPath = WinFol & "\" & sPath
+       Else
+         sPath = SysFol & "\" & sPath
+       End If
+     End If
+     
+     '--If no valid path found Then Exit.
+        If FSO.FileExists(sPath) = False Then
+            TProps.innertext = "Invalid file path."
+             Set FSO = Nothing
+            Exit Sub
+        End If    
+        
+   Set FSO = Nothing         
+   Set Sys = CreateObject("JSSys3.Ops")
+   On Error Resume Next
+       '-- there's a valid file path For this listing.
+       '--Get file properties with jssys3 PEFile object and fill in
+       '--right-side properties TD:
+     Set FilOb = Sys.GetPEFile(sPath)
+      If Err.number = 0 Then
+        s3 = "Name: " & FilOb.Name & CR2
+        s3 = s3 & "CompanyName: " & FilOb.CompanyName & CR2
+        s3 = s3 & "FileVersion: " & FilOb.FileVersion & CR2
+        s3 = s3 & "DateCreated: " & FilOb.DateCreated & CR2
+        s3 = s3 & "DateLastModified: " & FilOb.DateLastModified & CR2
+        s3 = s3 & "ProductVersion: " & FilOb.ProductVersion & CR2
+        s3 = s3 & "ProductName: " & FilOb.ProductName & CR2
+        s3 = s3 & "FileDescription: " & FilOb.FileDescription & CR2
+        s3 = s3 & "Size: " & FilOb.Size &  " KB" & vbcrlf
+         TProps.innertext = s3
+     Else
+        TProps.innertext = Err.Description
+     End If
+  Set FilOb = Nothing
+ Set Sys = Nothing          
+End Sub
+
+</SCRIPT>
+
+<!------------------- START HTML ------------------------------------------------->
+</HEAD>
+<BODY BGCOLOR="#03AEE7" TEXT="#000060" MARGINWIDTH=40 MARGINHEIGHT=20 LEFTMARGIN=40 TOPMARGIN=20>
+<DIV align="center">
+<BR>
+<FONT FACE="arial" COLOR="#0000A0" SIZE=2>
+<H2>Startup Manager Utility</H2>
+</FONT>
+
+<!------------------------- Explanation table ------------------------------------- -->
+<TABLE BORDER=2 BORDERCOLOR="#0000A0" WIDTH=740 CELLPADDING=10><TR><TD align="left" BGCOLOR="#B4ECFE">
+<FONT FACE="arial" COLOR="#0000A0" SIZE=2>
+&#160; &#160; This webpage is a Windows StartUp Manager. It lists all programs
+set to run at startup, getting the list from the Registry, StartUp folder and WIN.INI.
+The component JSSys3.dll must be installed for this webpage to work. The version
+of JSSys3.dll must be at least 3.03.0210 (required to get file properties for startup programs).<BR><BR>
+
+&#160; &#160; When this utility is used Internet Explorer will display a message that the page may not be safe.
+That is because the script in the page uses several objects that are not "safe for scripting":
+The FileSystemObject, WScript.Shell and JSSys3.dll. See the included file for information if you
+want to adjust Internet Explorer security.<BR><BR>
+
+&#160; &#160; It's possible that later versions of IE6 may not run this page at all. If that is
+the case, and you haven't disabled HTA, you could try renaming the file to StartMan.hta. Also,
+deleting an entry does not work in IE4. IE4 raises an error saying that the OPTION ID cannot
+be changed at runtime. As a result the IDs hold no data and the utility will report "Unable to
+find information needed to delete selected entry."<BR><BR>
+</FONT>
+</TD></TR></TABLE>
+
+
+
+<! ---------------- warning table ------------------------------------------------------->
+
+<TABLE BGCOLOR="#FFE8D2" BORDER=2 BORDERCOLOR="#0000A0" WIDTH=740 CELLPADDING=10><TR><TD align="center">
+<FONT FACE="arial" COLOR="#813E01" SIZE=3>
+<B>CAUTION: </B><BR>
+</FONT>
+<FONT FACE="arial" COLOR="#813E01" SIZE=2> <B>
+You use this utility at your own risk.<BR>
+Do not remove programs from startup if you are not certain that it is safe.<BR>
+Some startup programs are necessary.</B><BR><BR>
+
+Programs that should be safe to remove include music players and any other programs
+that have no reason to be constantly running. If they have been placed in the startup list
+they're probably spyware. Also, most hardware installs startup programs and in most
+cases it is not necessary. Frivolous printer utilities, CDR utilities, Zip drive programs, etc.
+should generally be safe to remove if you do not use them.<BR><BR>
+</FONT>
+</TD></TR></TABLE>
+
+
+<! ------------ end warning -------------------------------------------->
+
+<! ------------ usage info. table  --------------------------------------->
+
+<TABLE BORDER=2 BORDERCOLOR="#0000A0" WIDTH=740 CELLPADDING=10><TR><TD align="center" BGCOLOR="#B4ECFE">
+<FONT FACE="arial" COLOR="#0000A0" SIZE=2>
+<H4>To use this utility:</H4>
+&#149; Click Get List to show list of startup programs.<BR>
+&#149; Select an item and click Properties to get information about the program.<BR>
+&#149; Click Remove to remove selected item from startup.<BR><BR>
+</FONT>
+</TD></TR></TABLE>
+ 
+<!----------------- ops table - row of headers  ----------------------------------->
+
+<TABLE BORDER=4 BORDERCOLOR="#D57171" WIDTH=740 CELLPADDING=10>  
+<TR>
+<TD align="center" WIDTH=300 BGCOLOR="#6FDAFD">
+ <FONT FACE="arial" SIZE=2 COLOR="#0000A0"><B>
+               Startup Programs</B>
+</FONT>
+</TD>
+<TD align="center" WIDTH=140 BGCOLOR="#6FDAFD">
+<FONT FACE="arial" SIZE=2 COLOR="#0000A0"><B>
+               Options</B>
+</FONT>
+</TD>
+<TD align="center" WIDTH=300 BGCOLOR="#6FDAFD">
+<FONT FACE="arial" SIZE=2 COLOR="#0000A0"><B>
+         Properties of Selected Item:</B>    
+</FONT>
+</TD>
+</TR>
+
+<!------------------ List Box TD ----------------------------------------------- -->
+    <!-- this is the SELECT box for startup list. It gets ID = Box1 for use in script.  -->
+<TR> <TD align="top" WIDTH=300 BGCOLOR="#CFEFFE">
+               <SELECT ID="Box1" SIZE=18>
+               </SELECT>
+       </TD>
+
+<!---------------- Buttons TD ------------------------------------------------- -->
+
+<TD align="center" WIDTH=140 BGCOLOR="#CFEFFE">
+<FONT FACE="arial" SIZE=2 COLOR="#0000A0">
+  Get list of <BR>startup programs:<BR><BR>
+
+<!---------Get List button: "ButList"   -------------------->
+ <INPUT NAME="ButList" TYPE="button" VALUE="Get List"></INPUT><BR><BR>
+
+<!---------Get Properties button: "ButProp"   -------------------->
+   Get properties for <BR>selected item:<BR><BR>
+  <INPUT NAME="ButProp" TYPE="button" VALUE="Properties"></INPUT><BR><BR>
+
+<!---------Remove button: "ButRem"   -------------------->
+  Remove selected item<BR> from startup:<BR><BR>
+<INPUT NAME="ButRem" TYPE="button" VALUE="Remove"></INPUT><BR><BR>
+</FONT>
+</TD>
+
+<!----------------- File Properties TD ----------------------------------------- -->
+  <!-- this is the section on right side that displays file info. It gets ID TProps  ----->
+
+<TD ALIGN="top" WIDTH=300 ID="TProps" BGCOLOR="#CFEFFE">
+<FONT FACE="arial" SIZE=2 COLOR="#0000A0">
+</FONT>
+</TD>
+       
+</TR></TABLE>
+<BR><HR><BR>
+<FONT FACE="arial" COLOR="#0000A0" SIZE=2>
+<B>JSWare &#149; www.jsware.net</B><BR><BR>
+
+</FONT>
+</DIV>
+</BODY></HTML>
+

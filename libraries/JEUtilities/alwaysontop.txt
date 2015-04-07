@@ -1,0 +1,28 @@
+Private Declare Function SetWindowPos Lib "user32" (ByVal hWnd As Long, _
+    ByVal hWndInsertAfter As Long, ByVal X As Long, ByVal Y As Long, _
+    ByVal cx As Long, ByVal cy As Long, ByVal wFlags As Long) As Long
+
+Const SWP_NOSIZE = &H1
+Const SWP_NOMOVE = &H2
+Const SWP_SHOWWINDOW = &H40
+Const HWND_NOTOPMOST = -2
+Const HWND_TOPMOST = -1
+
+' Set a form always on the top.
+'
+' the form can be specified as a Form or object
+' or through its hWnd property
+' If OnTop=False the always on the top mode is de-activated.
+
+Sub SetAlwaysOnTopMode(hWndOrForm As Variant, Optional ByVal OnTop As Boolean = _
+    True)
+    Dim hWnd As Long
+    ' get the hWnd of the form to be move on top
+    If VarType(hWndOrForm) = vbLong Then
+        hWnd = hWndOrForm
+    Else
+        hWnd = hWndOrForm.hWnd
+    End If
+    SetWindowPos hWnd, IIf(OnTop, HWND_TOPMOST, HWND_NOTOPMOST), 0, 0, 0, 0, _
+        SWP_NOMOVE Or SWP_NOSIZE Or SWP_SHOWWINDOW
+End Sub

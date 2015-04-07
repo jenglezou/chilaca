@@ -1,0 +1,1 @@
+ExecuteFile "c:\VBSFramework\VBSFrameworkLauncher.vbs"

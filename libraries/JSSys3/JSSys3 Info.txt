@@ -1,0 +1,92 @@
+JSSys.DLL v.3.09.1029 posted 10-29-09
+_______________________________________________
+
+>> See JSSys3 Functions.html file for full details of functions, changes, etc.
+__________________________________________________________
+
+The JSSys3.dll component is designed to provide system information and functions that
+are not available in VBScript. The included HTML file contains a thorough listing
+of all functions. Most functions are also demonstrated with the sample scripts.
+Open the scripts in Notepad to see explanations in the comments at top.
+  (Note: Some of the samples require that a file be on the Desktop before running.)
+
+ 
+DEPENDENCIES: 
+    Use of this component requires:
+    *  the VB6 Runtime Files
+
+REGISTERING COMPONENTS:
+    ******************************************************************
+    ******************************************************************
+    *     NOTE: If you registered version 1 or 2 of JSSys.dll it should be unregistered,        *
+    *     replaced with this version, then the new version should be registered. This          *
+    *     version contains some changes to existing functions.                                       *
+    *    (RegSvr.vbs can be used for both operations.)                                                 *
+    ******************************************************************     
+     *****************************************************************
+
+    The component must be "registered" in Windows before use.
+            You can use the VBScript RegSvr.vbs to register or un-register any component.
+             The script also contains tips (commented) for registering a component remotely.
+          --------------------------------
+
+            To register JSSys3.dll by hand:
+              Go to Start Menu/Run.
+              Enter:
+                 RegSvr32 C:\Windows\System\JSSys3.dll
+                   (one space after "32". 2nd part should be path to where you've put JSSys3.dll.)
+              Click OK.
+               You should see a message box confirming that the component has been registered.
+            
+            To unregister the component:
+                  RegSvr32 -U C:\Windows\System\JSSys3.dll
+            
+            These operations require that you have RegSvr32.exe on your computer.
+            
+TO USE THE COMPONENT IN VBSCRIPT:
+ There are 3 objects in JSSys3.dll: Ops, IniEdit and StreamOps
+________________________________________________________________  
+Ops OBJECT:
+        
+           Dim ObjVar 
+           Set ObjVar = CreateObject("JSSys3.Ops")
+
+IniEdit OBJECT
+  
+           Dim ObjVar 
+           Set ObjVar = CreateObject("JSSys3.IniEdit")
+
+StreamOps OBJECT
+  
+           Dim ObjVar 
+           Set ObjVar = CreateObject("JSSys3.StreamOps")
+
+________________________________________________________________
+
+License:
+
+You use all script code and components from JSWare at your own risk.
+
+  The components (compiled DLL and EXE files) may be used for personal or
+commercial purposes. No payment or attribution is required for either use.
+The components may be redistributed if they are required as support files 
+for scripts or software that you have written.
+   Also, the script code may be used freely, in part or as whole scripts,
+for any purpose, personal or commercial, without payment or attribution.
+
+  I ask only that you not redistribute these scripts and components, except
+as required for your direct use. Instead, please direct others to obtain copies
+of JSWare scripts and components directly from www.jsware.net.
+
+  Also, none of the code here may be redistributed under another license. If a 
+work using code from JSWare is distributed with restrictions of any kind 
+the code from JSWare must be kept exempt from those restrictions. 
+This includes, but is not limited to, code sold for profit, code with usage restrictions
+and code distributed as so-called "Open Source" with redistribution restrictions. 
+
+                                         Joe Priestley
+
+
+JSWare
+www.jsware.net
+jsware@jsware.net  

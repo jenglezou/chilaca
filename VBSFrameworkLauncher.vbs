@@ -28,15 +28,17 @@ Const VAPI_XP_TEST = 2
 Const CMD_TEST = 3 
 Const QTP_LOCAL_TEST = 4
 
+Set oFS = CreateObject("Scripting.FileSystemObject")
+
 'set to default 
 globRunMode = -1
 
 iOriginalLocale = SetLocale("en-gb")  'Get the test script location
-sVBSFrameworkDir = "c:\VBSFramework"  'Set the location of the framwework code files
+sVBSFrameworkDir = oFS.GetAbsolutePathName(".") 'Set the location of the framwework code files
 ' default result path where will be Run result
-globResultPath = sVBSFrameworkDir & "\results" 
+globResultPath = oFS.GetAbsolutePathName(sVBSFrameworkDir & "\results")
 ' setting data path for spreadsheets			
-globDataPath = "c:\VBSFramework\data\" 
+globDataPath = oFS.GetAbsolutePathName(sVBSFrameworkDir & "\data")
 'Run mode decisor
 
 If Not IsEmpty(TDHelper) Then
@@ -99,14 +101,13 @@ Else
 	'for local execution
 	'change variable sLocalSpreadSheetPath to yours local spreadsheet
 	'vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
-	sLocalSpreadSheetPath = "c:\VBSFramework\tests\test\HelloWorldTest.xls"
+	'sLocalSpreadSheetPath = "c:\VBSFramework\tests\test\HelloWorldTest.xls"
 	'---------------------------------
 
 End If
 
-Set oFS = CreateObject("Scripting.FileSystemObject")
 
-sFilePath = sVBSFrameworkDir & "\clsVBSFramework.vbs"
+sFilePath = oFS.GetAbsolutePathName(sVBSFrameworkDir & "\clsVBSFramework.vbs")
 
 
 'Load clsVBSFramework class to global scope according to test type and execute spreadsheet
@@ -185,14 +186,14 @@ Select Case globRunMode
 			Set arrArgs = WScript.Arguments
 			
 			If arrArgs.Count = 1 Then ' run only one sheet with defaults
-				sLocalSpreadSheetPath = CStr(arrArgs.Item(0))
+				sLocalSpreadSheetPath = oFS.GetAbsolutePathName(CStr(arrArgs.Item(0)))
 				oVBSFramework.Main(sLocalSpreadSheetPath)
 			Else
 				If arrArgs.Count = 3 Then ' run sheet with another settings
 					
-					sLocalSpreadSheetPath = CStr(arrArgs.Item(0))
-					globResultPath =  CStr(arrArgs.Item(1))
-					globDataPath = CStr(arrArgs.Item(2))
+					sLocalSpreadSheetPath = oFS.GetAbsolutePathName(CStr(arrArgs.Item(0)))
+					globResultPath =  oFS.GetAbsolutePathName(CStr(arrArgs.Item(1)))
+					globDataPath = oFS.GetAbsolutePathName(CStr(arrArgs.Item(2)))
 					oVBSFramework.Main(sLocalSpreadSheetPath)
 					
 				Else

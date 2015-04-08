@@ -26,9 +26,9 @@ Option Explicit
 '==================================================================================================
 
 ' Paths
-Const PATH_RESOURCES = "c:\VBSFramework\temp\" 
-Const PATH_TESTS = "c:\VBSFramework\tests\"
-Const PATH_HOSTLOGFILE = "c:\VBSFramework\temp\trace.log"
+Const PATH_RESOURCES = ".\temp\"
+Const PATH_TESTS =  ".\tests\"
+Const PATH_HOSTLOGFILE = ".\temp\trace.log"
  
 ' Return codes for dispatcher and test functions
 Const XL_DISPATCH_UNKNOWN = 1
@@ -724,7 +724,8 @@ REM								 sScreenshotFullPath = globResultPath & "\" & "screen" & YYYYMMDDHHMM
 		
 		' Open workbook
 		oTraceLog.Message "MAIN: " & "Test started for workbook " & sWorkbook, LOG_MESSAGE
-		Set oWorkbook = OpenWorkbook(sWorkbook) : set oQRSDataObject.oQRSWorkbook = oWorkbook				'For recovery
+		Set oWorkbook = OpenWorkbook(sWorkbook) 
+		set oQRSDataObject.oQRSWorkbook = oWorkbook				'For recovery
 	
 		Dim oWMIService,oWMIDateTime,oProcessList,oProcess
 		Set oWMIDateTime = CreateObject("WbemScripting.SWbemDateTime")

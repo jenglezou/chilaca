@@ -25,10 +25,10 @@ End Function
 'Load an EXE. Unload it if required. 
 Private Sub LoadEXE(sEXEFile, sObject2Check, bUnloadFirst)
 	
-	If bUnloadFirst = True then ExecuteCommand sEXEFile & "/unregserver", True, True, "c:\ExecuteCommand.tmp" 'Unload
+	If bUnloadFirst = True then ExecuteCommand sEXEFile & "/unregserver", True, True, sVBSFrameworkDir & "\temp\ExecuteCommand.tmp" 'Unload
 		
 	If Not IsServerLoaded(sObject2Check) then 
-		ExecuteCommand sEXEFile & " /regserver", True, True, "c:\ExecuteCommand.tmp"
+		ExecuteCommand sEXEFile & " /regserver", True, True, sVBSFrameworkDir & "\temp\ExecuteCommand.tmp"
 	End If
 End Sub
 
@@ -36,10 +36,10 @@ End Sub
 'Load an DLL. Unload it if required. 
 Private Sub LoadDLL(sDLLFile, sObject2Check, bUnloadFirst)
 	
-	If bUnloadFirst = True then ExecuteCommand "regsvr32 /s /u " & sDLLFile, True, True, "c:\ExecuteCommand.tmp"	'Unload
+	If bUnloadFirst = True then ExecuteCommand "regsvr32 /s /u " & sDLLFile, True, True, sVBSFrameworkDir & "\temp\ExecuteCommand.tmp"	'Unload
 	
 	If Not IsServerLoaded(sObject2Check) then 
-		ExecuteCommand "regsvr32 /s " & sDLLFile, True, True, "c:\ExecuteCommand.tmp"
+		ExecuteCommand "regsvr32 /s " & sDLLFile, True, True, sVBSFrameworkDir & "\temp\ExecuteCommand.tmp"
 	End If
 End Sub
 '=================================================================================================
@@ -48,10 +48,10 @@ End Sub
 'Load an .NET assembly DLL. Unload it if required. 
 Private Sub LoadNETDLL(sDLLFile, sTLBFile, sObject2Check, bUnloadFirst)
 	
-	If bUnloadFirst = True Then ExecuteCommand """c:\windows\microsoft.net\framework\v2.0.50727\regasm.exe"" " & sDLLFile & "/unregister", True, True, "c:\ExecuteCommand.tmp"	'Unload
+	If bUnloadFirst = True Then ExecuteCommand """c:\windows\microsoft.net\framework\v2.0.50727\regasm.exe"" " & sDLLFile & "/unregister", True, True, sVBSFrameworkDir & "\temp\ExecuteCommand.tmp"	'Unload
 'STOP	
 	If Not IsServerLoaded(sObject2Check) then 
-		ExecuteCommand """c:\windows\microsoft.net\framework\v2.0.50727\regasm.exe"" " & sDLLFile & " /tlb:" & sTLBFile & " /codebase", True, True, "c:\ExecuteCommand.tmp"
+		ExecuteCommand """c:\windows\microsoft.net\framework\v2.0.50727\regasm.exe"" " & sDLLFile & " /tlb:" & sTLBFile & " /codebase", True, True, sVBSFrameworkDir & "\temp\ExecuteCommand.tmp"
 	End If
 End Sub
 '=================================================================================================
@@ -66,7 +66,7 @@ Dim bUnload			'True means - force unload before loading.
 If  len(sVBSFrameworkDir) > 0 Then
 	sLibraryFolder = sVBSFrameworkDir & "\Libraries\"
 else
-	sLibraryFolder = "c:\VBSFramework\Libraries\"
+	sLibraryFolder = "c:\chilaca\Libraries\"
 End If
 
 bUnload = False

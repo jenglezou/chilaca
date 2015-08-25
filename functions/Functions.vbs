@@ -925,6 +925,8 @@ Public Sub ExecuteCommand(sCommand, bWaitForFinish, bCloseOnFinish, sLogfile)
 	Dim WshShell, oExec
 	Dim sCmd
 
+	'slogFile = replace(sLogFile, "\", "\\")
+	'msgbox sCommand & ">>" & sLogFile
 	Set WshShell = CreateObject("WScript.Shell")
 
 	sCmd = "cmd /k "
@@ -3387,3 +3389,17 @@ Public Sub CheckForBackup(ByVal sLogFile)
 	'Else MsgBox sLogFile & " does not exist."
 	End If
 End Sub
+
+'==============================================================================================
+' Sub: PopUp(sMessage, iWaitSeconds, sTitle)
+' Purpose:
+' 	
+' Parameters:
+'	sMessage, iWaitSeconds, sTitle
+'==============================================================================================
+Public Function PopUp(sMessage, iWaitSeconds, sTitle)
+	Dim oShell
+	Set oShell = CreateObject("WScript.Shell")
+	call oShell.Popup(sMessage, iWaitSeconds, sTitle)
+	Set oShell = nothing
+End Function

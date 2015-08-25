@@ -26,9 +26,9 @@ Option Explicit
 '==================================================================================================
 
 ' Paths
-Const PATH_RESOURCES = ".\temp\"
-Const PATH_TESTS =  ".\tests\"
-Const PATH_HOSTLOGFILE = ".\temp\trace.log"
+'Const PATH_RESOURCES = "C:\GitHubProjects\chilaca\temp" '".\temp\"
+'Const PATH_TESTS =  ".\tests\"
+'Const PATH_HOSTLOGFILE = ".\temp\trace.log"
  
 ' Return codes for dispatcher and test functions
 Const XL_DISPATCH_UNKNOWN = 1
@@ -755,20 +755,20 @@ REM								 sScreenshotFullPath = globResultPath & "\" & "screen" & YYYYMMDDHHMM
 		If oQC.IsQCRun() Then
 			'if test is run from QC and Active Field is set to "N" then do not execute
 			oTraceLog.Message "ALM is running", LOG_MESSAGE
-			If globCurrentTSTest.Test.Field("TS_USER_TEMPLATE_01") = "N" Then
+'			If globCurrentTSTest.Test.Field("TS_USER_TEMPLATE_01") = "N" Then
 			
-				Set oCurrentTest = globCurrentTSTest.Test
+'				Set oCurrentTest = globCurrentTSTest.Test
 				
-				oWorkbook.Worksheets.Item(1).Rows(2).Insert
-				oWorkbook.Worksheets.Item(1).Rows(2).Font.ColorIndex		= 2
-	    		oWorkbook.Worksheets.Item(1).Rows(2).Font.Size				= 11
-				oWorkbook.Worksheets.Item(1).Rows(2).Interior.ColorIndex	= 5
-				oWorkbook.Worksheets.Item(1).Rows(2).Interior.ColorIndex	= 3
-				oWorkbook.Worksheets.Item(1).Rows(2).Cells(1,1).WrapText 	= False
-				oWorkbook.Worksheets.Item(1).Rows(2).Cells(1,1).Value 		= "Unable to run - field Active set to 'N'."
-				oTraceLog.Message "Unable to run - field Active set to 'N'.", LOG_ERROR
-				bContinue = false
-			End If
+'				oWorkbook.Worksheets.Item(1).Rows(2).Insert
+'				oWorkbook.Worksheets.Item(1).Rows(2).Font.ColorIndex		= 2
+'	    		oWorkbook.Worksheets.Item(1).Rows(2).Font.Size				= 11
+'				oWorkbook.Worksheets.Item(1).Rows(2).Interior.ColorIndex	= 5
+'				oWorkbook.Worksheets.Item(1).Rows(2).Interior.ColorIndex	= 3
+'				oWorkbook.Worksheets.Item(1).Rows(2).Cells(1,1).WrapText 	= False
+'				oWorkbook.Worksheets.Item(1).Rows(2).Cells(1,1).Value 		= "Unable to run - field Active set to 'N'."
+'				oTraceLog.Message "Unable to run - field Active set to 'N'.", LOG_ERROR
+'				bContinue = false
+'			End If
 		Else 
 			'TODO add message according to run mode
 			oTraceLog.Message "ALM is not running", LOG_MESSAGE	

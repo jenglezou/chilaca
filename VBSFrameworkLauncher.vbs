@@ -28,13 +28,21 @@ Const VAPI_XP_TEST = 2
 Const CMD_TEST = 3 
 Const QTP_LOCAL_TEST = 4
 
+'Dim PATH_RESOURCES : PATH_RESOURCES = "C:\GitHubProjects\chilaca\temp" '".\temp\"
+'Dim PATH_TESTS : PATH_TESTS =  "C:\GitHubProjects\chilaca\tests\"
+'Dim PATH_HOSTLOGFILE : PATH_HOSTLOGFILE = "C:\GitHubProjects\chilaca\temp\trace.log"
+Const PATH_RESOURCES = "C:\GitHubProjects\chilaca\temp\" '".\temp\"
+Const PATH_TESTS =  "C:\GitHubProjects\chilaca\tests\"
+Const PATH_HOSTLOGFILE = "C:\GitHubProjects\chilaca\temp\trace.log"
+
 Set oFS = CreateObject("Scripting.FileSystemObject")
 
 'set to default 
 globRunMode = -1
 
 iOriginalLocale = SetLocale("en-gb")  'Get the test script location
-sVBSFrameworkDir = oFS.GetAbsolutePathName(".") 'Set the location of the framwework code files
+'sVBSFrameworkDir = oFS.GetAbsolutePathName(".") 'Set the location of the framwework code files
+sVBSFrameworkDir = "C:\GitHubProjects\chilaca" 'oFS.GetAbsolutePathName(".") 'Set the location of the framwework code files
 ' default result path where will be Run result
 globResultPath = oFS.GetAbsolutePathName(sVBSFrameworkDir & "\results")
 ' setting data path for spreadsheets			
@@ -109,6 +117,7 @@ End If
 
 sFilePath = oFS.GetAbsolutePathName(sVBSFrameworkDir & "\clsVBSFramework.vbs")
 
+'MsgBox "Run mode: " & globRunMode & ", Framework File: " & sFilePath
 
 'Load clsVBSFramework class to global scope according to test type and execute spreadsheet
 Select Case globRunMode

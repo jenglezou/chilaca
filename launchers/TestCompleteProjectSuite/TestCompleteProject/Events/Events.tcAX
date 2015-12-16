@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE Nodes [
+
+<!ENTITY % NameValue "CDATA">
+<!ENTITY % PropType "(I|S|D|L|H|B)">
+<!ENTITY % VersionValue "CDATA">
+
+<!ELEMENT Prp (#PCDATA)>
+<!ELEMENT Node (Node|Prp)*>
+<!ELEMENT Nodes (Node)+>
+
+<!ATTLIST Nodes version CDATA "1">
+
+<!ATTLIST Node name CDATA #REQUIRED>
+
+<!ATTLIST Prp name CDATA #REQUIRED>
+<!ATTLIST Prp type CDATA #REQUIRED>
+<!ATTLIST Prp value CDATA #REQUIRED>
+]>
+<Nodes version="1">
+	<Node name="root">
+		<Node name="child list">
+			<Node name="item0">
+				<Node name="config">
+					<Node name="event0info">
+						<Prp name="info_controlname" type="S" value="General Events"/>
+						<Prp name="info_description" type="S" value="Occurs when a timeout expires in a project or in a project suite."/>
+						<Prp name="info_eventname" type="S" value="OnTimeout"/>
+						<Prp name="info_eventrealname" type="S" value="OnTimeout"/>
+						<Prp name="info_guid" type="S" value="{4C03E9F2-BB22-4E21-B2E7-E51B754FCBBA}"/>
+						<Prp name="info_id" type="I" value="1610743820"/>
+						<Prp name="info_tlbver" type="S" value="version.dll"/>
+					</Node>
+					<Node name="event10info">
+						<Prp name="info_controlname" type="S" value="General Events"/>
+						<Prp name="info_description" type="S" value="Occurs when an error message is posted to the test log."/>
+						<Prp name="info_eventname" type="S" value="OnLogError"/>
+						<Prp name="info_eventrealname" type="S" value="OnLogError"/>
+						<Prp name="info_guid" type="S" value="{4C03E9F2-BB22-4E21-B2E7-E51B754FCBBA}"/>
+						<Prp name="info_id" type="I" value="1610743811"/>
+						<Prp name="info_tlbver" type="S" value="version.dll"/>
+					</Node>
+					<Node name="event11info">
+						<Prp name="info_controlname" type="S" value="General Events"/>
+						<Prp name="info_description" type="S" value="Occurs when a warning message is posted to the test log."/>
+						<Prp name="info_eventname" type="S" value="OnLogWarning"/>
+						<Prp name="info_eventrealname" type="S" value="OnLogWarning"/>
+						<Prp name="info_guid" type="S" value="{4C03E9F2-BB22-4E21-B2E7-E51B754FCBBA}"/>
+						<Prp name="info_id" type="I" value="1610743810"/>
+						<Prp name="info_tlbver" type="S" value="version.dll"/>
+					</Node>
+					<Node name="event12info">
+						<Prp name="info_controlname" type="S" value="General Events"/>
+						<Prp name="info_description" type="S" value="Occurs when an informative message is posted to the test log."/>
+						<Prp name="info_eventname" type="S" value="OnLogMessage"/>
+						<Prp name="info_eventrealname" type="S" value="OnLogMessage"/>
+						<Prp name="info_guid" type="S" value="{4C03E9F2-BB22-4E21-B2E7-E51B754FCBBA}"/>
+						<Prp name="info_id" type="I" value="1610743809"/>
+						<Prp name="info_tlbver" type="S" value="version.dll"/>
+					</Node>
+					<Node name="event13info">
+						<Prp name="info_controlname" type="S" value="Test Engine Events"/>
+						<Prp name="info_description" type="S" value="Occurs when TestComplete stops running a test or when the execution of a test item is over."/>
+						<Prp name="info_eventname" type="S" value="OnStopTest"/>
+						<Prp name="info_eventrealname" type="S" value="OnStopTest"/>
+						<Prp name="info_guid" type="S" value="{F5856842-4323-49FD-B806-36E22179EF8A}"/>
+						<Prp name="info_id" type="I" value="1610743809"/>
+						<Prp name="info_tlbver" type="S" value="version.dll"/>
+					</Node>
+					<Node name="event14info">
+						<Prp name="info_controlname" type="S" value="Test Engine Events"/>
+						<Prp name="info_description" type="S" value="Occurs when TestComplete starts running a test (whether it is run from the UI or command line, or as a project test item)."/>
+						<Prp name="info_eventname" type="S" value="OnStartTest"/>
+						<Prp name="info_eventrealname" type="S" value="OnStartTest"/>
+						<Prp name="info_guid" type="S" value="{F5856842-4323-49FD-B806-36E22179EF8A}"/>
+						<Prp name="info_id" type="I" value="1610743808"/>
+						<Prp name="info_tlbver" type="S" value="version.dll"/>
+					</Node>
+					<Node name="event1info">
+						<Prp name="info_controlname" type="S" value="General Events"/>
+						<Prp name="info_description" type="S" value="Occurs when an overlapping window appears."/>
+						<Prp name="info_eventname" type="S" value="OnOverlappingWindow"/>
+						<Prp name="info_eventrealname" type="S" value="OnOverlappingWindow"/>
+						<Prp name="info_guid" type="S" value="{4C03E9F2-BB22-4E21-B2E7-E51B754FCBBA}"/>
+						<Prp name="info_id" type="I" value="1610743819"/>
+						<Prp name="info_tlbver" type="S" value="version.dll"/>
+					</Node>
+					<Node name="event2info">
+						<Prp name="info_controlname" type="S" value="General Events"/>
+						<Prp name="info_description" type="S" value="Occurs when an unexpected window appears."/>
+						<Prp name="info_eventname" type="S" value="OnUnexpectedWindow"/>
+						<Prp name="info_eventrealname" type="S" value="OnUnexpectedWindow"/>
+						<Prp name="info_guid" type="S" value="{4C03E9F2-BB22-4E21-B2E7-E51B754FCBBA}"/>
+						<Prp name="info_id" type="I" value="1610743818"/>
+						<Prp name="info_tlbver" type="S" value="version.dll"/>
+					</Node>
+					<Node name="event3info">
+						<Prp name="info_controlname" type="S" value="General Events"/>
+						<Prp name="info_description" type="S" value="Occurs when the currently active parent node is closed in the test log."/>
+						<Prp name="info_eventname" type="S" value="OnLogCloseNode"/>
+						<Prp name="info_eventrealname" type="S" value="OnLogCloseNode"/>
+						<Prp name="info_guid" type="S" value="{4C03E9F2-BB22-4E21-B2E7-E51B754FCBBA}"/>
+						<Prp name="info_id" type="I" value="1610743817"/>
+						<Prp name="info_tlbver" type="S" value="version.dll"/>
+					</Node>
+					<Node name="event4info">
+						<Prp name="info_controlname" type="S" value="General Events"/>
+						<Prp name="info_description" type="S" value="Occurs when a parent node is created in the test log."/>
+						<Prp name="info_eventname" type="S" value="OnLogCreateNode"/>
+						<Prp name="info_eventrealname" type="S" value="OnLogCreateNode"/>
+						<Prp name="info_guid" type="S" value="{4C03E9F2-BB22-4E21-B2E7-E51B754FCBBA}"/>
+						<Prp name="info_id" type="I" value="1610743816"/>
+						<Prp name="info_tlbver" type="S" value="version.dll"/>
+					</Node>
+					<Node name="event5info">
+						<Prp name="info_controlname" type="S" value="General Events"/>
+						<Prp name="info_description" type="S" value="Occurs when a reference to a file is posted to the test log."/>
+						<Prp name="info_eventname" type="S" value="OnLogLink"/>
+						<Prp name="info_eventrealname" type="S" value="OnLogLink"/>
+						<Prp name="info_guid" type="S" value="{4C03E9F2-BB22-4E21-B2E7-E51B754FCBBA}"/>
+						<Prp name="info_id" type="I" value="1610743815"/>
+						<Prp name="info_tlbver" type="S" value="version.dll"/>
+					</Node>
+					<Node name="event6info">
+						<Prp name="info_controlname" type="S" value="General Events"/>
+						<Prp name="info_description" type="S" value="Occurs when a file is posted to the test log."/>
+						<Prp name="info_eventname" type="S" value="OnLogFile"/>
+						<Prp name="info_eventrealname" type="S" value="OnLogFile"/>
+						<Prp name="info_guid" type="S" value="{4C03E9F2-BB22-4E21-B2E7-E51B754FCBBA}"/>
+						<Prp name="info_id" type="I" value="1610743814"/>
+						<Prp name="info_tlbver" type="S" value="version.dll"/>
+					</Node>
+					<Node name="event7info">
+						<Prp name="info_controlname" type="S" value="General Events"/>
+						<Prp name="info_description" type="S" value="Occurs when an image is posted to the test log."/>
+						<Prp name="info_eventname" type="S" value="OnLogPicture"/>
+						<Prp name="info_eventrealname" type="S" value="OnLogPicture"/>
+						<Prp name="info_guid" type="S" value="{4C03E9F2-BB22-4E21-B2E7-E51B754FCBBA}"/>
+						<Prp name="info_id" type="I" value="1610743813"/>
+						<Prp name="info_tlbver" type="S" value="version.dll"/>
+					</Node>
+					<Node name="event8info">
+						<Prp name="info_controlname" type="S" value="General Events"/>
+						<Prp name="info_description" type="S" value="Occurs when an event notification is posted to the test log."/>
+						<Prp name="info_eventname" type="S" value="OnLogEvent"/>
+						<Prp name="info_eventrealname" type="S" value="OnLogEvent"/>
+						<Prp name="info_guid" type="S" value="{4C03E9F2-BB22-4E21-B2E7-E51B754FCBBA}"/>
+						<Prp name="info_id" type="I" value="1610743812"/>
+						<Prp name="info_tlbver" type="S" value="version.dll"/>
+					</Node>
+					<Node name="event9info">
+						<Prp name="info_controlname" type="S" value="General Events"/>
+						<Prp name="info_description" type="S" value="Occurs when a checkpoint is posted to the test log."/>
+						<Prp name="info_eventname" type="S" value="OnLogCheckpoint"/>
+						<Prp name="info_eventrealname" type="S" value="OnLogCheckpoint"/>
+						<Prp name="info_guid" type="S" value="{4C03E9F2-BB22-4E21-B2E7-E51B754FCBBA}"/>
+						<Prp name="info_id" type="I" value="1610743821"/>
+						<Prp name="info_tlbver" type="S" value="version.dll"/>
+					</Node>
+					<Prp name="eventinfocount" type="I" value="15"/>
+					<Prp name="generatedclsid" type="S" value="{8BA3B549-480E-458A-B658-0C055DC13399}"/>
+					<Prp name="generatedeventskey" type="S" value="{03D86353-2DF4-4610-BD17-33CCC809BF80}"/>
+					<Prp name="generatedtlbdesc" type="S" value="TestComplete GeneralEvents Control - 06/12/2015 12:55:26"/>
+					<Prp name="generatedtlbkey" type="S" value="{1B56FA5D-3F42-4B3B-91F5-974536E9FA23}"/>
+					<Prp name="handlerinfocount" type="I" value="0"/>
+					<Prp name="lastopenedtlb" type="S" value=""/>
+					<Prp name="node name" type="S" value="GeneralEvents"/>
+				</Node>
+				<Node name="data"/>
+				<Node name="test data"/>
+				<Prp name="key" type="S" value="{7BD61C3C-9FD9-447A-992E-AAFBE656677E}"/>
+				<Prp name="type" type="S" value="{8A98BAC4-2A89-4883-AAE7-F07337DF59D1}"/>
+				<Prp name="typename" type="S" value="Event control"/>
+			</Node>
+			<Prp name="item count" type="I" value="1"/>
+		</Node>
+		<Node name="config">
+			<Prp name="node name" type="S" value="Events"/>
+			<Prp name="tlbhistory" type="S" value="&quot;TestComplete general events&quot;"/>
+		</Node>
+		<Node name="data"/>
+		<Node name="folders"/>
+		<Node name="test data"/>
+		<Prp name="key" type="S" value="{734E066B-5D20-402A-8F83-07C6474A6522}"/>
+		<Prp name="signature" type="S" value="{E7ABA87F-E873-4452-9921-6F4BAAEB2BCC}"/>
+		<Prp name="type" type="S" value="{E7ABA87F-E873-4452-9921-6F4BAAEB2BCC}"/>
+		<Prp name="typename" type="S" value="Events"/>
+		<Prp name="version" type="I" value="1"/>
+	</Node>
+</Nodes>

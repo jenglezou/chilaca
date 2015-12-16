@@ -1,0 +1,42 @@
+Option Explicit
+'definition of global objects
+Dim globCurrentTSTest
+Dim globCurrentTestSet
+Dim globCurrentRun
+Dim globTDConnection
+Dim sVBSFrameworkDir : sVBSFrameworkDir = "c:\Chilaca"
+
+Sub Test_Main(Debug, CurrentTestSet, CurrentTSTest, CurrentRun)
+  Dim oFS,oFile ',sVBSFrameworkDir
+  Dim sScript,sFilePath
+  'On Error Resume Next
+  'set local variables to global scope, to be visible in framework class
+  Set globCurrentTSTest =  CurrentTSTest
+  Set globCurrentTestSet = CurrentTestSet
+  Set globCurrentRun  = CurrentRun
+  Set globTDConnection  = TDConnection
+   'read VBSFramework base class from framwork directory
+  sFilePath = sVBSFrameworkDir & "\launchers\VAPI-XPTestLauncher.vbs"
+  Set oFS = CreateObject("Scripting.FileSystemObject")
+  If oFS.FileExists(sFilePath) Then
+     Set oFile = oFS.OpenTextFile(sFilePath,1, False)
+     sScript= oFile.ReadAll
+     oFile.Close
+     Set oFile = Nothing
+     ExecuteGlobal sScript 'load vbs to global scope
+  Else
+      TDHelper.AddStepToRun "File not found", "File in path: " & sFilePath & "doesn not exists",,,"Failed"
+  End If
+
+  Set oFS = Nothing
+  ' handle run-time errors
+  If Err.Number <> 0 Then
+    TDOutput.Print "Run-time error [" & Err.Number & "] : " & Err.Description
+   ' MsgBox "Run-time error [" & Err.Number & "] : " & Err.Description
+    'update execution status in "Test" mode
+    If Not Debug Then
+      CurrentRun.Status = "Failed"
+      CurrentTSTest.Status = "Failed"
+    End If
+  End If
+End Sub

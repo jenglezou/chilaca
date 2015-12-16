@@ -1,0 +1,78 @@
+. 
+Mon 11/23/2015 10:04:43.27 START "c:\windows\microsoft.net\framework\v2.0.50727\regasm.exe" "H:\GIT\chilaca\Libraries\Selenium.DLL" /tlb:"H:\GIT\chilaca\Libraries\Selenium.TLB" /codebase ***************** 
+Microsoft (R) .NET Framework Assembly Registration Utility 2.0.50727.5483
+Copyright (C) Microsoft Corporation 1998-2004.  All rights reserved.
+
+Mon 11/23/2015 10:04:43.79 FINISH "c:\windows\microsoft.net\framework\v2.0.50727\regasm.exe" "H:\GIT\chilaca\Libraries\Selenium.DLL" /tlb:"H:\GIT\chilaca\Libraries\Selenium.TLB" /codebase ***************** 
+. 
+08/12/2015 13:21:11.84 START "c:\windows\microsoft.net\framework\v2.0.50727\regasm.exe" "c:\chilaca\Libraries\Selenium.DLL" /tlb:"c:\chilaca\Libraries\Selenium.TLB" /codebase ***************** 
+Microsoft (R) .NET Framework Assembly Registration Utility 2.0.50727.8670
+Copyright (C) Microsoft Corporation 1998-2004.  All rights reserved.
+
+08/12/2015 13:21:12.65 FINISH "c:\windows\microsoft.net\framework\v2.0.50727\regasm.exe" "c:\chilaca\Libraries\Selenium.DLL" /tlb:"c:\chilaca\Libraries\Selenium.TLB" /codebase ***************** 
+. 
+08/12/2015 13:26:07.37 START "c:\windows\microsoft.net\framework\v2.0.50727\regasm.exe" "c:\chilaca\Libraries\Selenium.DLL" /tlb:"c:\chilaca\Libraries\Selenium.TLB" /codebase ***************** 
+Microsoft (R) .NET Framework Assembly Registration Utility 2.0.50727.8670
+Copyright (C) Microsoft Corporation 1998-2004.  All rights reserved.
+
+08/12/2015 13:26:07.78 FINISH "c:\windows\microsoft.net\framework\v2.0.50727\regasm.exe" "c:\chilaca\Libraries\Selenium.DLL" /tlb:"c:\chilaca\Libraries\Selenium.TLB" /codebase ***************** 
+. 
+08/12/2015 13:28:08.03 START "c:\windows\microsoft.net\framework\v2.0.50727\regasm.exe" "c:\chilaca\Libraries\Selenium.DLL" /tlb:"c:\chilaca\Libraries\Selenium.TLB" /codebase ***************** 
+Microsoft (R) .NET Framework Assembly Registration Utility 2.0.50727.8670
+Copyright (C) Microsoft Corporation 1998-2004.  All rights reserved.
+
+08/12/2015 13:28:08.43 FINISH "c:\windows\microsoft.net\framework\v2.0.50727\regasm.exe" "c:\chilaca\Libraries\Selenium.DLL" /tlb:"c:\chilaca\Libraries\Selenium.TLB" /codebase ***************** 
+. 
+08/12/2015 13:29:56.29 START "c:\windows\microsoft.net\framework\v2.0.50727\regasm.exe" "c:\chilaca\Libraries\Selenium.DLL" /tlb:"c:\chilaca\Libraries\Selenium.TLB" /codebase ***************** 
+Microsoft (R) .NET Framework Assembly Registration Utility 2.0.50727.8670
+Copyright (C) Microsoft Corporation 1998-2004.  All rights reserved.
+
+08/12/2015 13:29:56.67 FINISH "c:\windows\microsoft.net\framework\v2.0.50727\regasm.exe" "c:\chilaca\Libraries\Selenium.DLL" /tlb:"c:\chilaca\Libraries\Selenium.TLB" /codebase ***************** 
+. 
+08/12/2015 13:33:11.50 START "c:\windows\microsoft.net\framework\v2.0.50727\regasm.exe" "c:\chilaca\Libraries\Selenium.DLL" /tlb:"c:\chilaca\Libraries\Selenium.TLB" /codebase ***************** 
+Microsoft (R) .NET Framework Assembly Registration Utility 2.0.50727.8670
+Copyright (C) Microsoft Corporation 1998-2004.  All rights reserved.
+
+08/12/2015 13:33:11.89 FINISH "c:\windows\microsoft.net\framework\v2.0.50727\regasm.exe" "c:\chilaca\Libraries\Selenium.DLL" /tlb:"c:\chilaca\Libraries\Selenium.TLB" /codebase ***************** 
+. 
+08/12/2015 13:35:52.08 START "c:\windows\microsoft.net\framework\v2.0.50727\regasm.exe" "c:\chilaca\Libraries\Selenium.DLL" /tlb:"c:\chilaca\Libraries\Selenium.TLB" /codebase ***************** 
+Microsoft (R) .NET Framework Assembly Registration Utility 2.0.50727.8670
+Copyright (C) Microsoft Corporation 1998-2004.  All rights reserved.
+
+08/12/2015 13:35:52.46 FINISH "c:\windows\microsoft.net\framework\v2.0.50727\regasm.exe" "c:\chilaca\Libraries\Selenium.DLL" /tlb:"c:\chilaca\Libraries\Selenium.TLB" /codebase ***************** 
+. 
+08/12/2015 13:38:18.21 START "c:\windows\microsoft.net\framework\v2.0.50727\regasm.exe" "c:\chilaca\Libraries\Selenium.DLL" /tlb:"c:\chilaca\Libraries\Selenium.TLB" /codebase ***************** 
+Microsoft (R) .NET Framework Assembly Registration Utility 2.0.50727.8670
+Copyright (C) Microsoft Corporation 1998-2004.  All rights reserved.
+
+08/12/2015 13:38:18.61 FINISH "c:\windows\microsoft.net\framework\v2.0.50727\regasm.exe" "c:\chilaca\Libraries\Selenium.DLL" /tlb:"c:\chilaca\Libraries\Selenium.TLB" /codebase ***************** 
+. 
+08/12/2015 13:59:25.15 START "c:\windows\microsoft.net\framework\v2.0.50727\regasm.exe" "c:\chilaca\Libraries\Selenium.DLL" /tlb:"c:\chilaca\Libraries\Selenium.TLB" /codebase ***************** 
+Microsoft (R) .NET Framework Assembly Registration Utility 2.0.50727.8670
+Copyright (C) Microsoft Corporation 1998-2004.  All rights reserved.
+
+08/12/2015 13:59:25.60 FINISH "c:\windows\microsoft.net\framework\v2.0.50727\regasm.exe" "c:\chilaca\Libraries\Selenium.DLL" /tlb:"c:\chilaca\Libraries\Selenium.TLB" /codebase ***************** 
+. 
+08/12/2015 14:36:19.50 START "c:\windows\microsoft.net\framework\v2.0.50727\regasm.exe" "c:\chilaca\Libraries\Selenium.DLL" /tlb:"c:\chilaca\Libraries\Selenium.TLB" /codebase ***************** 
+Microsoft (R) .NET Framework Assembly Registration Utility 2.0.50727.8670
+Copyright (C) Microsoft Corporation 1998-2004.  All rights reserved.
+
+08/12/2015 14:36:19.91 FINISH "c:\windows\microsoft.net\framework\v2.0.50727\regasm.exe" "c:\chilaca\Libraries\Selenium.DLL" /tlb:"c:\chilaca\Libraries\Selenium.TLB" /codebase ***************** 
+. 
+08/12/2015 14:38:18.25 START "c:\windows\microsoft.net\framework\v2.0.50727\regasm.exe" "c:\chilaca\Libraries\Selenium.DLL" /tlb:"c:\chilaca\Libraries\Selenium.TLB" /codebase ***************** 
+Microsoft (R) .NET Framework Assembly Registration Utility 2.0.50727.8670
+Copyright (C) Microsoft Corporation 1998-2004.  All rights reserved.
+
+08/12/2015 14:38:18.65 FINISH "c:\windows\microsoft.net\framework\v2.0.50727\regasm.exe" "c:\chilaca\Libraries\Selenium.DLL" /tlb:"c:\chilaca\Libraries\Selenium.TLB" /codebase ***************** 
+. 
+08/12/2015 14:41:54.09 START "c:\windows\microsoft.net\framework\v2.0.50727\regasm.exe" "c:\chilaca\Libraries\Selenium.DLL" /tlb:"c:\chilaca\Libraries\Selenium.TLB" /codebase ***************** 
+Microsoft (R) .NET Framework Assembly Registration Utility 2.0.50727.8670
+Copyright (C) Microsoft Corporation 1998-2004.  All rights reserved.
+
+08/12/2015 14:41:54.49 FINISH "c:\windows\microsoft.net\framework\v2.0.50727\regasm.exe" "c:\chilaca\Libraries\Selenium.DLL" /tlb:"c:\chilaca\Libraries\Selenium.TLB" /codebase ***************** 
+. 
+08/12/2015 15:06:22.31 START "c:\windows\microsoft.net\framework\v2.0.50727\regasm.exe" "c:\chilaca\Libraries\Selenium.DLL" /tlb:"c:\chilaca\Libraries\Selenium.TLB" /codebase ***************** 
+Microsoft (R) .NET Framework Assembly Registration Utility 2.0.50727.8670
+Copyright (C) Microsoft Corporation 1998-2004.  All rights reserved.
+
+08/12/2015 15:06:22.70 FINISH "c:\windows\microsoft.net\framework\v2.0.50727\regasm.exe" "c:\chilaca\Libraries\Selenium.DLL" /tlb:"c:\chilaca\Libraries\Selenium.TLB" /codebase ***************** 

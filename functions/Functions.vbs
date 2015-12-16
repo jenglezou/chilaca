@@ -169,29 +169,29 @@ End Function
 '*****
 '==============================================================================================
  Public Function Screenshot(sFile, bUploadToQCRun)
-	Dim oTAScreenshot 
-	Dim bRetVal 
-	Dim sLog
+'	Dim oTAScreenshot 
+'	Dim bRetVal 
+'	Dim sLog
 	
-	sLog = ""	
-	Set oTAScreenshot = CreateObject("TAUtility.Screenshot")
-	WaitTime(200)
-	bRetVal = oTAScreenshot.MakeScreenshot(sFile, sLog)
-	WaitTime(200)
+'	sLog = ""	
+'	Set oTAScreenshot = CreateObject("TAUtility.Screenshot")
+'	WaitTime(200)
+'	bRetVal = oTAScreenshot.MakeScreenshot(sFile, sLog)
+'	WaitTime(200)
 	
-	If Not bRetVal Then
-		oVBSFramework.oTraceLog.Message "Screenshot not made", "LOG: " & sLog, LOG_ERROR
-		oVBSFramework.oTraceLog.StepMessage "Screenshot not made", XL_DISPACH_FAIL, sLog, Null, ""
-	Else
-		If bUploadToQCRun = True Then		 
-			If oQC.IsQCRun() Then
-				oQC.UploadAttachmentToQCRun(sFile)
-				oVBSFramework.oTraceLog.Message "Screenshot loaded to ALM. File name: " & sFile, LOG_MESSAGE
-			End If
-		End If
-		oVBSFramework.oTraceLog.Message "Screenshot made. File name: " & sFile, LOG_MESSAGE
-	End If
-	Set oTAScreenshot = Nothing
+'	If Not bRetVal Then
+'		oVBSFramework.oTraceLog.Message "Screenshot not made", "LOG: " & sLog, LOG_ERROR
+'		oVBSFramework.oTraceLog.StepMessage "Screenshot not made", XL_DISPACH_FAIL, sLog, Null, ""
+'	Else
+'		If bUploadToQCRun = True Then		 
+'			If oQC.IsQCRun() Then
+'				oQC.UploadAttachmentToQCRun(sFile)
+'				oVBSFramework.oTraceLog.Message "Screenshot loaded to ALM. File name: " & sFile, LOG_MESSAGE
+'			End If
+'		End If
+'		oVBSFramework.oTraceLog.Message "Screenshot made. File name: " & sFile, LOG_MESSAGE
+'	End If
+'	Set oTAScreenshot = Nothing
  End Function
 
 '==============================================================================================

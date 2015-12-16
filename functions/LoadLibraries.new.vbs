@@ -66,25 +66,21 @@ Dim bUnload			'True means - force unload before loading.
 If  len(sVBSFrameworkDir) > 0 Then
 	sLibraryFolder = sVBSFrameworkDir & "\Libraries\"
 else
-	sLibraryFolder = "c:\chilaca\Libraries\"
+	sLibraryFolder = "c:\VBSFramework\Libraries\"
 End If
 
 bUnload = False
 
-'sEXEFile = """" & sLibraryFolder & "JEUtilities.exe"""
-'LoadEXE sEXEFile, "JEUtilities.itemlist", bUnload
+sEXEFile = """" & sLibraryFolder & "JEUtilities.exe"""
+LoadEXE sEXEFile, "JEUtilities.itemlist", bUnload
 
-'sDLLFILE = """" & sLibraryFolder & "JSSys3.dll"""
-'LoadDLL sDLLFile, "JSSys3.ops", bUnload
+sDLLFILE = """" & sLibraryFolder & "JSSys3.dll"""
+LoadDLL sDLLFile, "JSSys3.ops", bUnload
 
-'sDLLFILE = """" & sLibraryFolder & "TAUtility.dll"""
-'sTLBFile = """" & sLibraryFolder & "TAUtility.tlb"""
-'LoadNETDLL sDLLFile,sTLBFile,"TAUtility", bUnload
+sDLLFILE = """" & sLibraryFolder & "TAUtility.dll"""
+sTLBFile = """" & sLibraryFolder & "TAUtility.tlb"""
+LoadNETDLL sDLLFile,sTLBFile,"TAUtility", bUnload
 
-'sDLLFile = """" & sLibraryFolder & "FileDiffNET.DLL"""
-'sTLBFile = """" & sLibraryFolder & "FileDiffNET.TLB"""
-'LoadNETDLL sDLLFile, sTLBFile, "FileDiffNET.Compare", bUnload
-
-sDLLFile = """" & sLibraryFolder & "Selenium.DLL"""
-sTLBFile = """" & sLibraryFolder & "Selenium.TLB"""
-LoadNETDLL sDLLFile, sTLBFile, "Selenium.ChromeDriver", bUnload
+sDLLFile = """" & sLibraryFolder & "FileDiffNET.DLL"""
+sTLBFile = """" & sLibraryFolder & "FileDiffNET.TLB"""
+LoadNETDLL sDLLFile, sTLBFile, "FileDiffNET.Compare", bUnload

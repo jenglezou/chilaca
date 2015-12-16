@@ -26,9 +26,9 @@ Option Explicit
 '==================================================================================================
 
 ' Paths
-'Const PATH_RESOURCES = "C:\GitHubProjects\chilaca\temp" '".\temp\"
-'Const PATH_TESTS =  ".\tests\"
-'Const PATH_HOSTLOGFILE = ".\temp\trace.log"
+Dim PATH_RESOURCES : PATH_RESOURCES = sVBSFrameworkDir & "\temp\"
+Dim PATH_TESTS : PATH_TESTS =  sVBSFrameworkDir & "\tests\"
+Dim PATH_HOSTLOGFILE : PATH_HOSTLOGFILE = sVBSFrameworkDir & "\trace.log"
  
 ' Return codes for dispatcher and test functions
 Const XL_DISPATCH_UNKNOWN = 1
@@ -77,6 +77,8 @@ Dim gTraceLogInstanceNumber
 gTraceLogDepth = 0
 gTraceLogOn = True
 gTraceLogInstanceNumber = 0
+
+Dim sXUnitFileText, sXUnitTestSuiteName, sXUnitTestClassName, sXUnitStepRow, sXUnitStepName
 '==================================================================================================
 ' Class Start
 '==================================================================================================
@@ -421,7 +423,7 @@ Class clsVBSFramework
 								End If
 	' REM changedto ScreenShot - it is in function.vbs
 							Case "CAPTURESCREEN", "CAPTURESCREENSHOT", "SCREENCAPTURE", "SCREENSHOT"
-REM								 sScreenshotFullPath = globResultPath & "\" & "screen" & YYYYMMDDHHMMSS(Now()) & ".png"
+Rem								 sScreenshotFullPath = globResultPath & "\" & "screen" & YYYYMMDDHHMMSS(Now()) & ".png"
 								 'Desktop.CaptureBitmap sScreenshotFullPath								 
 								 Screenshoot sScreenshotFullPath, true
 								 
@@ -571,6 +573,18 @@ REM								 sScreenshotFullPath = globResultPath & "\" & "screen" & YYYYMMDDHHMM
 			oTraceLog.Message sLog, LOG_SLOG
 			' step message loaded to ALM
 			Call oTraceLog.StepMessage(CStr(oRow.Cells(1, XL_KEYWORD)), iRetVal, sLog, arrInputParams, sOutputParams)
+
+'***** For xUnit reporting ********
+			sXUnitStepName = CStr(oRow.Cells(1, XL_KEYWORD))
+			sXUnitStepRow = right("0" & oRow.Row, 2)
+			if sXUnitStepName <> "" then
+				sXUnitFileText = sXUnitFileText & "<testcase classname=""" & sXUnitTestClassName & """ name=""Step" & sXUnitStepRow & "-" & sXUnitStepName & """ time=""0"">" & vbNewLine 
+				if iRetval = XL_DISPATCH_FAIL or iRetval = XL_DISPATCH_FAILCONTINUE then
+					sXUnitFileText = sXUnitFileText & "<error type=""exception"" message=""error message"">" & vbNewLine & sLog & vbNewLine & "</error>" & vbNewLine
+				end if 
+				sXUnitFileText = sXUnitFileText & "</testcase>" & vbNewLine
+			End If
+'***** For xUnit reporting ********
 		
 		End If 'oRow.Cells(1, XL_DISABLE).Value <> ""
 		
@@ -604,7 +618,7 @@ REM								 sScreenshotFullPath = globResultPath & "\" & "screen" & YYYYMMDDHHMM
 			oTraceLog.HostLogMessage "END" 
 			Exit Sub
 		End If
-		
+
 		Set oXlApp = CreateObject("Excel.Application")
 	
 		'set position of excel application 
@@ -623,14 +637,22 @@ REM								 sScreenshotFullPath = globResultPath & "\" & "screen" & YYYYMMDDHHMM
 	 		oFso.createfolder (globResultPath)
 	 		oFso.createfolder (globDataPath)
 		On Error GoTo 0
+
+		sXUnitTestSuiteName = "AutomatedTestSuite"
+		sXUnitFileText = "<?xml version=""1.0"" encoding=""UTF-8""?>" & vbNewLine & _
+						 "<testsuites>" & vbNewLine & _
+						 "<testsuite name=""" & sXUnitTestSuiteName & """ tests=""[TESTS]"" errors=""[ERRORS]"" failures=""[FAILURES]"" skip=""[SKIP]"">" & vbNewLine
 		
 		If sWorkbook <> "" Then 
 			'get general start of spreadsheet
 			globTestStart = Now()
 			
 			If oFso.FileExists(sWorkbook) Then
+				sXUnitTestClassName = sXUnitTestSuiteName & "." & oFso.GetBaseName(sWorkbook)
 			
 				If oFso.FolderExists(globResultPath) Then	
+'msgbox globDataPath
+				
 					If oFso.FolderExists(globDataPath) Then	
 						'get general foler result folder
 						globResultPath = globResultPath & "\" & oFso.GetBaseName(sWorkbook) & "_RESULT" & YYYYMMDDHHMMSS(globTestStart)
@@ -755,20 +777,20 @@ REM								 sScreenshotFullPath = globResultPath & "\" & "screen" & YYYYMMDDHHMM
 		If oQC.IsQCRun() Then
 			'if test is run from QC and Active Field is set to "N" then do not execute
 			oTraceLog.Message "ALM is running", LOG_MESSAGE
-'			If globCurrentTSTest.Test.Field("TS_USER_TEMPLATE_01") = "N" Then
+			Rem If globCurrentTSTest.Test.Field("TS_USER_TEMPLATE_01") = "N" Then
 			
-'				Set oCurrentTest = globCurrentTSTest.Test
+				Rem Set oCurrentTest = globCurrentTSTest.Test
 				
-'				oWorkbook.Worksheets.Item(1).Rows(2).Insert
-'				oWorkbook.Worksheets.Item(1).Rows(2).Font.ColorIndex		= 2
-'	    		oWorkbook.Worksheets.Item(1).Rows(2).Font.Size				= 11
-'				oWorkbook.Worksheets.Item(1).Rows(2).Interior.ColorIndex	= 5
-'				oWorkbook.Worksheets.Item(1).Rows(2).Interior.ColorIndex	= 3
-'				oWorkbook.Worksheets.Item(1).Rows(2).Cells(1,1).WrapText 	= False
-'				oWorkbook.Worksheets.Item(1).Rows(2).Cells(1,1).Value 		= "Unable to run - field Active set to 'N'."
-'				oTraceLog.Message "Unable to run - field Active set to 'N'.", LOG_ERROR
-'				bContinue = false
-'			End If
+				Rem oWorkbook.Worksheets.Item(1).Rows(2).Insert
+				Rem oWorkbook.Worksheets.Item(1).Rows(2).Font.ColorIndex		= 2
+	    		Rem oWorkbook.Worksheets.Item(1).Rows(2).Font.Size				= 11
+				Rem oWorkbook.Worksheets.Item(1).Rows(2).Interior.ColorIndex	= 5
+				Rem oWorkbook.Worksheets.Item(1).Rows(2).Interior.ColorIndex	= 3
+				Rem oWorkbook.Worksheets.Item(1).Rows(2).Cells(1,1).WrapText 	= False
+				Rem oWorkbook.Worksheets.Item(1).Rows(2).Cells(1,1).Value 		= "Unable to run - field Active set to 'N'."
+				Rem oTraceLog.Message "Unable to run - field Active set to 'N'.", LOG_ERROR
+				Rem bContinue = false
+			Rem End If
 		Else 
 			'TODO add message according to run mode
 			oTraceLog.Message "ALM is not running", LOG_MESSAGE	
@@ -1195,7 +1217,8 @@ REM								 sScreenshotFullPath = globResultPath & "\" & "screen" & YYYYMMDDHHMM
 		
 		'capture screen before killing processes			
 		If bFailure = True Then	
-			Screenshot globResultPath & "\" & "screenshot@failure_" & YYYYMMDDHHMMSS(Now()) & ".png", True
+			'Commented the below out because TAUtilities is currently failing (activeX issue or permissions)
+			'Screenshot globResultPath & "\" & "screenshot@failure_" & YYYYMMDDHHMMSS(Now()) & ".png", True
 		End If
 		
 	'	WaitTime(10000)
@@ -1222,6 +1245,14 @@ REM								 sScreenshotFullPath = globResultPath & "\" & "screen" & YYYYMMDDHHMM
 				oVBSFramework.oTraceLog.HostLogMessage "Result: Unknown"
 		End Select 
 		
+		sXUnitFileText = sXUnitFileText & _
+						"</testsuite>" & vbNewLine & _
+						"</testsuites>" 
+
+		'sXUnitTestClassName = replace(sXUnitTestClassName, """", "")						
+'msgbox Left(globResultPath, Len(globResultPath)) & ".xml" & vbNewLine & sXUnitFileText
+		Call WriteAllFileText(Left(globResultPath, Len(globResultPath)) & ".xml", sXUnitFileText)
+
 		oVBSFramework.oTraceLog.HostLogMessage "Duration: " & iDuration & " s"
 		oTraceLog.Message "END", LOG_MESSAGE
 		oTraceLog.HostLogMessage "Main: " & "Test finished for workbook " & sWorkbook 
@@ -1479,7 +1510,9 @@ REM								 sScreenshotFullPath = globResultPath & "\" & "screen" & YYYYMMDDHHMM
 		'capture screen after killing processes
 		If bFailure = True Then
 		'	Screenshot PATH_RESOURCES & "screenshot@failure_" & YYYYMMDDHHMMSS(Now()) & "_cleanup.png", False
-			Screenshot globResultPath & "\" & "screenshot@failure_" & YYYYMMDDHHMMSS(Now()) & "_cleanup.png", False
+		
+			'Commented the below out because TAUtilities is currently failing (activeX issue or permissions)
+			'Screenshot globResultPath & "\" & "screenshot@failure_" & YYYYMMDDHHMMSS(Now()) & "_cleanup.png", False
 		End If
 		
 		'Set dictWhiteList = Nothing
@@ -1695,7 +1728,7 @@ REM								 sScreenshotFullPath = globResultPath & "\" & "screen" & YYYYMMDDHHMM
 		oTraceLog.HostLogMessage("> ENTERED: " & sRoutine)
 		
 		CreateFolderFromPath(PATH_RESOURCES)
-	
+
 		sTestSpreadsheet = ""
 
 		If oQC.IsQCRun() Then		
@@ -2516,7 +2549,7 @@ REM								 sScreenshotFullPath = globResultPath & "\" & "screen" & YYYYMMDDHHMM
 		Dim oDialog, bDialogResult, iYesNo
 		
 		iYesNo = vbYes
-		sTmpFolder = "c:\tmpselectitem"
+		sTmpFolder = "h:\tmpselectitem"
 		Set fso = CreateObject("Scripting.FileSystemObject")
 		
 		'Create folder
@@ -2620,7 +2653,10 @@ REM								 sScreenshotFullPath = globResultPath & "\" & "screen" & YYYYMMDDHHMM
 		'todo change path to globalDataFOlder
 		'STOP
 		'sLocalFile = PATH_TESTS & sResourceName & ".xls"
-		sLocalFile = globDataPath & sResourceName & ".xls"
+		sLocalFile = globDataPath & "\" & sResourceName & ".xls"
+
+'msgbox globDataPath
+
 		If globDebug Then
 			oTraceLog.Message "Local file set to: " & sLocalFile, LOG_DEBUG
 		End If
@@ -3054,7 +3090,7 @@ REM								 sScreenshotFullPath = globResultPath & "\" & "screen" & YYYYMMDDHHMM
 			
 			Set dictUniqueConfigParams = CreateObject("scripting.dictionary")
 			If globDebug Then
-				oTraceLog.Message "chceking for param and config", LOG_DEBUG
+				oTraceLog.Message "checking for param and config", LOG_DEBUG
 			End If
 			If Not bLongCellPresent Then
 				'use fast FIND method if there isn't cell longer than 1020 chars
@@ -4954,7 +4990,7 @@ Class clsModules
 				Else
 					'we do not have such test object in sources
 					sRetVal = ""
-					oVBSFramework.oTraceLog "GetNameOfTestObject: No Test object for" & sAlias & " recognised", LOG_ERROR
+					oVBSFramework.oTraceLog.Message "GetNameOfTestObject: No Test object for" & sAlias & " recognised", LOG_ERROR
 				End If
 			End If	
 		End If

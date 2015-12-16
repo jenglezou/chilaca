@@ -1,0 +1,1 @@
+"C:\Program Files (x86)\SmartBear\TestComplete 11\Bin\TestComplete.exe" "C:\chilaca\launchers\TestCompleteProjectSuite\TestCompleteProjectSuite.pjs" /run /project:TestCompleteProject "/test:Script|TestCompleteLauncher|Initiate" /xlsfile=C:\chilaca\tests\Examples.xls

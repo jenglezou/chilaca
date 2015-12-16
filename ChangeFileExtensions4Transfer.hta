@@ -1,0 +1,192 @@
+<html>
+<head>
+<title>ChangeFileExtensions4Transfer</title>
+<HTA:APPLICATION
+  APPLICATIONNAME="ChangeFileExtensions4Transfer"
+  ID="ChangeFileExtensions4Transfer"
+  VERSION="1.0"/>
+</head>
+<!--meta http-equiv="refresh" content="5" -->
+<script language="VBScript">
+
+Dim oFS: Set oFS = CreateObject("Scripting.FileSystemObject")
+Dim iFilesRenamed: iFilesRenamed = 0
+Dim iFilesSkipped: iFilesSkipped = 0
+
+Dim sOutput
+Dim oFolderElement, oResultsElement, oStatusElement
+Dim oSimulateElement
+
+Sub Window_OnLoad
+	Call Form
+End Sub
+
+Sub Form
+	Set oFolderElement = document.getElementById("txtFolder")
+	Set oResultsElement = document.getElementById("txtResults")
+	Set oStatusElement = document.getElementById("txtStatus")
+	Set oSimulateElement = document.getElementById("chkSimulate")
+
+	sOutput = "Log of activity will go here" & vbNewLine & vbNewLine
+	
+End Sub
+
+Sub Change
+	Dim oCurrentFolder
+	
+	sOutput = Now() & vbNewLine
+	
+	If oFolderElement.value = "" Then 
+		MsgBox "Please select a File"
+		sOutput = sOutput & "Please select a File" & vbNewLine
+	Else
+		iFilesRenamed = 0
+		iFilesSkipped = 0
+		If oSimulateElement.checked = True Then sOutput = sOutput & "Simulating ..." & vbNewLine
+
+		'MsgBox "Selected: " & oFolderElement.Value  & vbnewline & "Folder: " & oFS.GetParentFolderName(oFolderElement.Value)
+		Set oCurrentFolder = oFS.GetFolder(oFS.GetParentFolderName(oFolderElement.Value))
+		MsgBox "Warning: All fiiles within the directory """ & oCurrentFolder.Path & """ will be renamed."
+		oResultsElement.value = "Warning: All fiiles within the directory """ & oCurrentFolder.Path & """ will be renamed." & vbnewline & "Please wait ..."
+
+		oStatusElement.Value = "Busy"
+		oStatusElement.style.color = "red"
+		Call ProcessSubFolders(oCurrentFolder)
+		sOutput = "Files renamed :" & iFilesRenamed & vbNewLine & "Files Skipped :" & iFilesSkipped  & vbNewLine & sOutput & "Done."
+	End If 
+
+	oStatusElement.style.color = "green"
+	oStatusElement.Value = "Ready"
+	oResultsElement.value = sOutput
+End Sub
+
+'******************************************************************************
+Sub UnChange
+	Dim oCurrentFolder
+	
+	sOutput = Now() & vbnewline
+	
+	If oFolderElement.value = "" Then 
+		MsgBox "Please select a File"
+		sOutput = sOutput & "Please select a File" & vbNewLine
+	Else
+		iFilesRenamed = 0
+		iFilesSkipped = 0
+		If oSimulateElement.checked = True Then sOutput = sOutput & "Simulating ..." & vbNewLine
+
+		'MsgBox "Selected: " & oFolderElement.Value  & vbnewline & "Folder: " & oFS.GetParentFolderName(oFolderElement.Value)
+		Set oCurrentFolder = oFS.GetFolder(oFS.GetParentFolderName(oFolderElement.Value))
+		MsgBox "Warning: All fiiles within the directory """ & oCurrentFolder.Path & """ will be renamed."
+		oResultsElement.value = "Warning: All fiiles within the directory """ & oCurrentFolder.Path & """ will be renamed." & vbnewline & "Please wait ..."
+		oStatusElement.Value = "Busy"
+		oStatusElement.style.color = "red"
+		Call UnProcessSubFolders(oCurrentFolder)
+		sOutput = "Files renamed :" & iFilesRenamed & vbNewLine & "Files Skipped :" & iFilesSkipped  & vbNewLine & sOutput & "Done."
+	End If 
+
+	oStatusElement.style.color = "green"
+	oStatusElement.Value = "Ready"
+	oResultsElement.value = sOutput
+End Sub
+
+'******************************************************************************
+Sub ProcessSubFolders (ByVal oCurrFolder)
+  Dim oFolders: Set oFolders = oCurrFolder.SubFolders
+  Dim oFolder 'process the current folder 
+
+  Call ProcessFolder(oCurrFolder)
+
+  For Each oFolder in oFolders
+  	Call ProcessSubFolders(oFolder)
+  Next
+    
+ End Sub 
+
+'******************************************************************************
+Sub ProcessFolder (ByVal oFolder)
+	Dim oFiles: Set oFiles = oFolder.Files
+	Dim oFile
+	
+	oStatusElement.Value = "Busy ... " & oFolder.Path
+	DoEvents
+	For Each oFile In oFiles
+		If InStr(1, oFile.Path, "_dot_") = 0 Then
+			sOutput = sOutput & oFile.Path & " -> " & oFS.GetParentFolderName(oFile.Path) & "\" & Replace(oFS.GetFileName(oFile.Path),".", "_dot_") & ".txt" & vbnewline
+			If Not oSimulateElement.checked = True Then oFile.Move oFS.GetParentFolderName(oFile.Path) & "\" & Replace(oFS.GetFileName(oFile.Path),".", "_dot_") & ".txt"
+			iFilesRenamed = iFilesRenamed + 1
+		Else
+			iFilesSkipped = iFilesSkipped + 1
+		End If
+	Next
+   	oResultsElement.value = sOutput
+End Sub
+
+'******************************************************************************
+Sub UnProcessSubFolders (ByVal oCurrFolder)
+  Dim oFolders: Set oFolders = oCurrFolder.SubFolders
+  Dim oFolder 'process the current folder 
+
+  UnProcessFolder oCurrFolder
+  
+  For Each oFolder in oFolders 
+    UnProcessSubFolders oFolder
+  Next
+    
+ End Sub 
+
+'******************************************************************************
+Sub UnProcessFolder (ByVal oFolder)
+	Dim oFiles: Set oFiles = oFolder.Files
+	Dim oFile
+
+	oStatusElement.Value = "Busy ... " & oFolder.Path
+	DoEvents
+	For Each oFile In oFiles
+		If InStr(1, oFile.Path, "_dot_") > 0 then
+			sOutput = sOutput & oFile.Path & " -> " & Replace(Replace(oFile.Path, ".txt", ""),"_dot_", ".") & vbnewline
+			If Not oSimulateElement.checked = True Then oFile.Move Replace(Replace(oFile.Path, ".txt", ""),"_dot_", ".")
+			iFilesRenamed = iFilesRenamed + 1
+		Else
+			iFilesSkipped = iFilesSkipped + 1
+		End If
+	Next
+	oResultsElement.value = sOutput
+End Sub
+
+'******************************************************************************
+Sub ExitChange
+	Self.close 
+End Sub
+
+Sub DoEvents()
+	'If (Second(Now) Mod 2) = 0 Then
+		Set WshShell = CreateObject("WScript.Shell")
+		WshShell.run "%comspec% /c exit", 0, True
+		Set WshShell = Nothing
+	'End If
+End Sub
+
+
+</script>
+
+<body bgcolor="white">
+
+Folder: <Input type="file" size="100" name="folder" title="Click to browse for file" id="txtFolder" />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<input type="button" value="Change"  onclick="Change" id="btnChange" style="width:150px;color:green;font-weight:bold"/> 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<input type="button" value="Change Back"  onclick="UnChange" id="btnUnChange" style="width:150px;color:blue;font-weight:bold"/> <p><p/>
+
+
+<textarea type="textarea" cols="170" rows="35" id="txtResults" style="background-color:lightgrey;color=blue">Log of activity will go here</textarea> <p/><p/>
+
+<input type="button" value="Exit" onclick="ExitChange" id="btnExit" style="width:100px;color:red"/> 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<textarea type="textarea" cols="50" rows="1" id="txtStatus" style="background-color:lightgrey;color=green">Ready</textarea> <p/><p/>
+<input type="checkbox" id="chkSimulate" checked=True title="Simulate Only (don't actually change anything)" />Simulate Only (don't actually change anything)
+
+<p/><p/>
+
+</body>
+</html>

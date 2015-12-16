@@ -1,0 +1,128 @@
+﻿'Option Explicit
+'definition of global objects
+Dim globCurrentTSTest     ' current TSTest instead of QCutil.CurrentTestSetTest
+Dim globCurrentTestSet    ' current TestSet instead of QCutil.CurrentTestSet
+Dim globCurrentRun        ' current Run instead of QCUtil.CurrentRun
+Dim globTDConnection      ' current connection to ALM, instad of QCUtil.QCConnection
+	
+Dim oVBSFramework         'The VBSFramework object.
+Dim sVBSFrameworkDir      'Folder containing the VBSFramework code and VBS files for application objects
+Dim iOriginalLocale
+Dim oFS, oFile
+Dim sScript,sFilePath
+	
+Dim arrArgs ' inputs to launcher
+	
+Dim globRunMode ' global variable indicates runMode
+Dim globRetVal ' return value of framework run
+Dim globResultPath '  path where result spreadsheet will be stored
+Dim globDataPath '  path where are data spreadsheets stored
+Dim globTestStart 'time when spreadsheet started execution
+Dim globeDebug: globDebug = true ' if debug mode is on/of
+Dim iDuration '  duration of test execution
+	
+Const QTP_TEST = 1
+Const VAPI_XP_TEST = 2
+Const CMD_TEST = 3 
+Const QTP_LOCAL_TEST = 4
+
+Dim bFrameworkAlreadyLoaded : bFrameworkAlreadyLoaded = false
+
+sVBSFrameworkDir = "C:\chilaca" 'oFS.GetAbsolutePathName(".") 'Set the location of the framwework code files
+
+'=========================================================================
+' Initiate gets the spreadsheet script from the command line and calls the launcher
+'========================================================================= 
+function Initiate()
+  'dim arrXLSFiles()
+
+  bFrameworkAlreadyLoaded = false
+  iArgs = builtin.ParamCount
+  for i = 1 to iArgs
+    'sArgs = sArgs & builtin.ParamStr(i) & vbnewline
+    sName = uCase(split(builtin.ParamStr(i), "=")(0))
+    Select Case(sName)
+    case "/XLSFILE"
+      redim arrXLSFiles(0)
+      sFile = split(builtin.ParamStr(i), "=")(1)
+      call Launcher(sFile)
+      'msgbox "XLSScript found " & sFile 
+      
+    case "/XLSLIST"
+      sValue = split(builtin.ParamStr(i), "=")(1)
+      arrXLSFiles = split(sValue, ",")
+      for each sFile in arrXLSFiles
+        call Launcher(sFile)
+        'call Launcher(split(ucase(sValue), ".XLS")(0) & "2.xls")
+      Next
+      
+    case "/XLSFOLDER"
+      sValue = split(builtin.ParamStr(i), "=")(1)
+      
+    case "/XLSCONFIG"
+      sValue = split(builtin.ParamStr(i), "=")(1)
+      
+    Case else   
+      'msgbox "Unknown parameter: " &  builtin.ParamStr(i)
+    End Select
+    
+  Next
+  'msgBox sArgs
+end function
+  	
+'=========================================================================
+' Launcher runs the framework to run the spreadsheet script 
+'========================================================================= 
+Sub Launcher(sLocalSpreadSheetPath)
+
+	Set oFS = CreateObject("Scripting.FileSystemObject")
+	
+	'set to default 
+	globRunMode = -1
+	
+	iOriginalLocale = SetLocale("en-gb")  'Get the test script location
+	globResultPath = oFS.GetAbsolutePathName(sVBSFrameworkDir & "\results") ' default result path where will be Run result
+	globDataPath = oFS.GetAbsolutePathName(sVBSFrameworkDir & "\data")      ' setting data path for spreadsheets			
+
+	sFilePath = oFS.GetAbsolutePathName(sVBSFrameworkDir & "\clsVBSFramework.vbs")
+		
+	'Load clsVBSFramework class to global scope according to test type and execute spreadsheet
+	
+	If oFS.FileExists(sFilePath) Then
+    if not bFrameworkAlreadyLoaded = true then 
+      LoadAndExecuteGlobal sFilePath 'load vbs to global scope
+		  Set oVBSFramework = New clsVBSFramework	
+      bFrameworkAlreadyLoaded = true
+    End if
+    
+		oVBSFramework.Main(sLocalSpreadSheetPath)
+	Else
+		msgbox Now() & " " & "File not found" & " Description: " & "File in path: " & sVBSFrameworkDir & "\clsVBSFramework.vbs " & "does not exists" & " Status: " & "Failed" & vbLf       	  			
+	End If	
+	
+	Set oFS = Nothing
+	
+	'Set oVBSFramework = Nothing
+	'Set globCurrentTSTest =  Nothing
+	'Set globCurrentTestSet = Nothing
+	'Set globCurrentRun  = Nothing
+	'Set globTDConnection  = Nothing	
+
+	SetLocale iOriginalLocale
+  
+end sub
+'==============================================================================================
+'==============================================================================================
+Function LoadAndExecuteGlobal(sFilePath)
+	Set oFS = CreateObject("Scripting.FileSystemObject")
+	If oFS.FileExists(sFilePath) Then
+		Set oFile = oFS.OpenTextFile(sFilePath, 1, False)
+		sScript = oFile.ReadAll
+		oFile.Close
+		Set oFile = Nothing
+    Call ExecuteGlobal(sScript) 'load vbs to global scope
+    LoadAndExecuteGlobal = True   
+  else
+    LoadAndExecuteGlobal = False   
+  End if
+End Function

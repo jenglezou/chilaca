@@ -1,0 +1,62 @@
+<html>
+<head>
+<title>Simulated BARS Application</title>
+<HTA:APPLICATION
+  APPLICATIONNAME="Simulated BARS Application"
+  ID="SimulatedBARSApplication"
+  VERSION="1.0"/>
+</head>
+
+<script language="VBScript">
+
+Dim txtUserId, txtPassword, txtBuySell, txtClient, txtAction, txtOutput
+
+Sub Window_OnLoad
+	window.resizeTo 1150,450
+    window.moveTo 750, 590
+
+	Call Form
+  'This method will be called when the application loads
+  'Add your code here
+End Sub
+
+Sub Form
+	Set txtUserId = document.getElementById("txtUserId")
+	Set txtPassword = document.getElementById("txtPassword")
+	Set txtBuySell = document.getElementById("txtBuySell")
+	Set txtClient = document.getElementById("txtClient")
+	Set txtAction = document.getElementById("txtAction")
+	Set txtOutput = document.getElementById("txtOutput")
+End Sub
+
+Sub Login
+	txtOutput.value = "Login" & vbNewLine & "User Id: " & txtUserId.value & vbNewLine & "Password: " & txtPassword.value
+End Sub
+
+Sub Action
+	txtOutput.value = "Action" & vbNewLine & txtAction.value
+End Sub
+
+'--------------------------------------------------------------------------
+'--------------------------------------------------------------------------
+Sub ExitApp
+	Self.close 
+End Sub
+
+
+</script>
+
+<body bgcolor="lightgreen">
+
+Action: &nbsp;&nbsp;&nbsp;&nbsp; <Input type="text" size="35" title="Enter action" id="txtAction" style="background-color:lightgrey;color=blue">
+&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<input type="button" value="Action"  onclick="Action" id="btnAction" title="Click to perform action" style="width:100px;color:green;font-weight:bold"/> 
+<p/> ================================================================================================ <p/> 
+
+<textarea type="textarea" cols="100" rows="4" id="txtOutput" style="background-color:lightgrey;color=blue"> </textarea> <p/><p/>
+<p/> ================================================================================================ <p/> 
+<input type="button" value="Exit" onclick="ExitApp" id="btnExit" style="width:100px;color:red"/> <p/><p/>
+
+</body>
+</html>

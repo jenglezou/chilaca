@@ -85,6 +85,6 @@ bUnload = False
 'sTLBFile = """" & sLibraryFolder & "FileDiffNET.TLB"""
 'LoadNETDLL sDLLFile, sTLBFile, "FileDiffNET.Compare", bUnload
 
-sDLLFile = """" & sLibraryFolder & "Selenium.DLL"""
-sTLBFile = """" & sLibraryFolder & "Selenium.TLB"""
-LoadNETDLL sDLLFile, sTLBFile, "Selenium.ChromeDriver", bUnload
+'sDLLFile = """" & sLibraryFolder & "Selenium.DLL"""
+'sTLBFile = """" & sLibraryFolder & "Selenium.TLB"""
+'LoadNETDLL sDLLFile, sTLBFile, "Selenium.ChromeDriver", bUnload
